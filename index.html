@@ -798,7 +798,7 @@ function getSettings() {
 
 // ── نسخه‌بندی داده (Schema Versioning) ──
 // هر بار ساختار داده عوض شد، یه بلوک جدید با شماره بالاتر اضافه کن و SCHEMA_VERSION رو زیاد کن.
-const APP_VERSION = '3.4';
+const APP_VERSION = '3.5';
 const SCHEMA_VERSION = 3;
 function migrate() {
   var v = store._version || 1;
@@ -1700,11 +1700,11 @@ function importBackup(e){const file=e.target.files[0];if(!file)return;const read
 // ════════════════ سینک گوگل‌درایو ════════════════
 var GDRIVE_SCOPE='https://www.googleapis.com/auth/drive.file';
 var GDRIVE_FILENAME='planner-backup.json';
-var _gdToken=null,_gdTokenExpiry=0,_gdTokenClient=null,_gdGisLoaded=false,_gdFileId=null;
+var _gdToken=null,_gdTokenExpiry=0,_gdTokenClient=null,_gdGisLoaded=false,_gdFileId=null,_gdPending=null;
 
 function gdriveClientId(){return (getSettings().gdriveClientId||'').trim();}
 function saveGdriveClientId(v){getSettings().gdriveClientId=(v||'').trim();save();gdriveResetAuth();gdriveUpdateUI();}
-function gdriveResetAuth(){_gdToken=null;_gdTokenExpiry=0;_gdTokenClient=null;localStorage.removeItem('gdrive_token');}
+function gdriveResetAuth(){_gdToken=null;_gdTokenExpiry=0;_gdPending=null;localStorage.removeItem('gdrive_token');}
 function gdriveTokenValid(){return !!_gdToken && Date.now()<_gdTokenExpiry-60000;}
 function gdriveLoadToken(){try{var s=JSON.parse(localStorage.getItem('gdrive_token')||'null');if(s&&s.token&&s.expiry&&Date.now()<s.expiry-60000){_gdToken=s.token;_gdTokenExpiry=s.expiry;}}catch(e){}}
 
@@ -1719,24 +1719,34 @@ function gdriveLoadGis(){
   });
 }
 
+function gdriveEnsureClient(cid){
+  if(_gdTokenClient)return;
+  _gdTokenClient=google.accounts.oauth2.initTokenClient({
+    client_id:cid,scope:GDRIVE_SCOPE,
+    callback:function(resp){
+      var p=_gdPending;_gdPending=null;
+      if(resp&&resp.error){if(p)p.reject(new Error(resp.error));return;}
+      _gdToken=resp.access_token;
+      _gdTokenExpiry=Date.now()+(resp.expires_in?resp.expires_in*1000:3600000);
+      localStorage.setItem('gdrive_token',JSON.stringify({token:_gdToken,expiry:_gdTokenExpiry}));
+      getSettings().gdriveLinked=true;persist();
+      gdriveUpdateUI();
+      if(p)p.resolve(_gdToken);
+    },
+    error_callback:function(err){
+      var p=_gdPending;_gdPending=null;
+      if(p)p.reject(new Error((err&&err.type)||'اتصال ناموفق'));
+    }
+  });
+}
 function gdriveGetToken(interactive){
   return new Promise(function(resolve,reject){
     if(gdriveTokenValid()){resolve(_gdToken);return;}
     var cid=gdriveClientId();
     if(!cid){reject(new Error('اول Client ID رو وارد کن'));return;}
     gdriveLoadGis().then(function(){
-      if(!_gdTokenClient){
-        _gdTokenClient=google.accounts.oauth2.initTokenClient({
-          client_id:cid,scope:GDRIVE_SCOPE,
-          callback:function(resp){
-            if(resp.error){reject(new Error(resp.error));return;}
-            _gdToken=resp.access_token;
-            _gdTokenExpiry=Date.now()+(resp.expires_in?resp.expires_in*1000:3600000);
-            localStorage.setItem('gdrive_token',JSON.stringify({token:_gdToken,expiry:_gdTokenExpiry}));
-            gdriveUpdateUI();resolve(_gdToken);
-          }
-        });
-      }
+      gdriveEnsureClient(cid);
+      _gdPending={resolve:resolve,reject:reject};
       _gdTokenClient.requestAccessToken({prompt:interactive?'consent':''});
     }).catch(reject);
   });
@@ -1810,6 +1820,7 @@ function gdriveSync(interactive){
 function gdriveToggleConnect(){
   if(gdriveTokenValid()){
     if(_gdToken&&window.google&&google.accounts){try{google.accounts.oauth2.revoke(_gdToken,function(){});}catch(e){}}
+    getSettings().gdriveLinked=false;persist();
     gdriveResetAuth();gdriveUpdateUI();showToast('قطع شد','');
   }else{
     gdriveGetToken(true).then(function(){gdriveUpdateUI();gdriveSync(true);}).catch(function(e){showToast('خطا: '+e.message,'warn');});
@@ -1837,17 +1848,27 @@ function gdriveUpdateUI(){
   if(txt){
     var ls=getSettings().gdriveLastSync;
     if(connected)txt.textContent='متصل'+(ls?(' — '+ls.label+' '+gdriveTimeAgo(ls.t)):'');
-    else txt.textContent=hasCid?'متصل نیست':'اول Client ID رو وارد کن';
+    else if(!hasCid)txt.textContent='اول Client ID رو وارد کن';
+    else if(getSettings().gdriveLinked)txt.textContent='در حال اتصال…';
+    else txt.textContent='متصل نیست';
   }
+  if(dot&&!connected&&hasCid&&getSettings().gdriveLinked)dot.style.background='var(--gold)';
   if(label)label.textContent=connected?'قطع اتصال':'اتصال به گوگل‌درایو';
   ['gdriveSyncBtn','gdriveUploadBtn','gdriveDownloadBtn'].forEach(function(id){var b=document.getElementById(id);if(b)b.style.display=connected?'':'none';});
 }
 
-// سینک خودکار هنگام باز شدن اپ (فقط اگه توکن معتبر ذخیره شده باشه)
+// سینک خودکار هنگام باز شدن اپ
 function gdriveAutoSync(){
   gdriveLoadToken();
-  if(gdriveClientId()&&gdriveTokenValid())gdriveSync(false);
-  gdriveUpdateUI();
+  if(!gdriveClientId()){gdriveUpdateUI();return;}
+  if(gdriveTokenValid()){gdriveUpdateUI();gdriveSync(false);return;}
+  // توکن منقضی شده ولی قبلاً وصل بوده → تلاش بی‌صدا برای گرفتن توکن جدید
+  if(getSettings().gdriveLinked){
+    gdriveUpdateUI();
+    gdriveGetToken(false).then(function(){gdriveUpdateUI();gdriveSync(false);}).catch(function(){gdriveUpdateUI();});
+  }else{
+    gdriveUpdateUI();
+  }
 }
 
 // ── Report ──
