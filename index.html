@@ -239,6 +239,17 @@ body{padding-bottom:4.8rem !important}
   </div>
 </div>
 
+<div class="overlay" id="changelogModal">
+  <div class="modal-box" style="max-width:400px">
+    <div class="modal-header">
+      <div class="modal-title">✨ چه خبر تازه؟</div>
+      <button class="modal-close" onclick="closeChangelog()">✕</button>
+    </div>
+    <div id="changelogBody" style="max-height:55vh;overflow-y:auto;padding:0.2rem 0.1rem"></div>
+    <button onclick="closeChangelog()" style="width:100%;margin-top:0.8rem;background:var(--accent);color:var(--on-accent);border:none;border-radius:10px;padding:0.65rem;font-family:'Vazirmatn',sans-serif;font-weight:700;font-size:0.85rem;cursor:pointer">باشه، بریم!</button>
+  </div>
+</div>
+
 <div class="topbar">
   <div class="app-title"><svg class="logo-svg" viewBox="242 99 220 92" fill="currentColor" role="img" aria-label="نقطه"><g> <path d="M303.45,170.93c1.09,0,2.16,0.27,3.22,0.82c1.05,0.58,1.88,1.41,2.49,2.49c0.6,1.07,0.91,2.17,0.91,3.3 c0,1.17-0.29,2.28-0.88,3.33s-1.4,1.87-2.46,2.46s-2.14,0.88-3.27,0.88h-2.16c-4.79,0.04-9.11-0.67-12.95-2.13 c-3.84-1.46-6.93-3.93-9.27-7.4c-2.3-3.59-3.57-7.24-3.8-10.96c-0.23-3.72-0.06-7.61,0.53-11.67c0.47-3.04-0.12-5.01-1.75-5.91 c-1.64-0.9-3.53-0.97-5.67-0.23c-2.61,0.94-4.68,2.48-6.2,4.62c-2.3,3.28-3.3,6.4-3.01,9.39c0.29,2.98,1.54,5.36,3.74,7.13 c2.2,1.77,5.08,2.47,8.62,2.08c1.68-0.04,2.8,0.92,3.36,2.87c0.57,1.95,0.26,3.95-0.91,5.99c-1.17,2.05-3.49,3.17-6.96,3.36 c-4.41,0.08-8.69-1.42-12.87-4.5c-2.77-2.34-4.62-5.6-5.56-9.79c-0.94-4.19-0.88-8.65,0.17-13.39s3.15-9.07,6.29-13.01 c3.14-3.94,7.38-6.8,12.72-8.6c3.12-0.97,6.06-1.23,8.83-0.76c2.77,0.47,5.2,1.46,7.31,2.98c2.57,1.95,4.32,4.28,5.23,6.99 c0.92,2.71,1.22,5.6,0.91,8.68c-0.08,0.78-0.16,1.58-0.23,2.4c-0.43,3.12-0.55,6.09-0.35,8.92c0.2,2.83,1.31,5.14,3.33,6.93 C294.84,169.97,298.38,170.89,303.45,170.93z"/> <path d="M380.11,184.2c-1.72,0-3.74-0.21-6.08-0.64c-2.42-0.39-4.76-1.15-7.02-2.28c-2.26-1.13-4.13-2.77-5.61-4.91 c-2.03,1.01-4.13,1.89-6.32,2.63c-8.15,2.57-16.33,4.12-24.56,4.65s-17.25,0.71-27.07,0.56c-1.13,0-2.22-0.29-3.27-0.88 s-1.87-1.4-2.46-2.46s-0.88-2.16-0.88-3.33c0-1.13,0.29-2.23,0.88-3.3s1.4-1.89,2.46-2.46s2.14-0.85,3.27-0.85 c1.6,0,2.79-0.25,3.57-0.76c0.78-0.51,1.5-1.48,2.16-2.92c0.7-1.48,1.23-3.12,1.58-4.91c0.35-1.79,0.58-3.51,0.7-5.15 c-0.04-2.18-0.06-4.39-0.06-6.61c0.12-5.85-0.04-11.87-0.47-18.07v-1.46c-0.16-2.53,0.02-4.8,0.53-6.81 c0.51-2.01,1.97-3.44,4.38-4.3c3.7-1.09,6.25-0.49,7.63,1.81c1.38,2.3,2.12,5.28,2.22,8.95c0.1,3.67-0.01,7-0.32,10 c0,0.39-0.02,0.76-0.06,1.11c-0.04,0.43-0.06,0.9-0.06,1.4c-0.2,2.77-0.45,5.87-0.76,9.3c3.47-3.55,7.38-6.56,11.72-9.03 c4.35-2.48,8.88-3.93,13.6-4.36c9.2-0.47,15.98,0.99,20.35,4.39c4.37,3.39,6.47,7.89,6.32,13.51c-0.12,4.05-1.4,7.62-3.86,10.7 c0.86,1.01,1.94,1.8,3.25,2.37c1.31,0.57,2.76,0.85,4.36,0.85c1.09,0,2.16,0.27,3.22,0.82c1.05,0.58,1.88,1.41,2.49,2.49 s0.91,2.17,0.91,3.3c0,1.17-0.29,2.28-0.88,3.33s-1.4,1.87-2.46,2.46s-2.14,0.88-3.27,0.88H380.11z M322.46,170.93 c12.75,0.35,22.46-0.59,29.15-2.84c6.69-2.24,10.76-4.86,12.22-7.87c1.46-3,0.73-5.46-2.19-7.37c-4.48-2.53-9.41-3.08-14.76-1.64 c-5.36,1.44-10.29,4.02-14.79,7.72C327.57,162.65,324.37,166.64,322.46,170.93z"/> <path d="M380.23,184.2c-1.13,0-2.22-0.29-3.27-0.88s-1.87-1.4-2.46-2.46s-0.88-2.16-0.88-3.33c0-1.13,0.29-2.23,0.88-3.3 s1.4-1.89,2.46-2.46s2.14-0.85,3.27-0.85c2.07,0,4.16-0.08,6.29-0.23c2.12-0.16,3.71-0.62,4.77-1.4c-2.81-1.87-4.68-4.44-5.61-7.72 c-0.94-3.28-0.96-6.61-0.09-10s2.62-6.2,5.23-8.42c4.64-3.55,9.33-5.12,14.06-4.71c4.74,0.41,8.7,2.17,11.9,5.29 c3.2,3.12,4.87,6.96,5.03,11.52c0.16,4.56-2.03,9.18-6.55,13.86c0.82,0.82,1.93,1.33,3.33,1.52c1.4,0.2,2.88,0.29,4.44,0.29h2.05 c1.05,0.04,2.07,0.31,3.04,0.82c1.05,0.58,1.88,1.41,2.49,2.49s0.91,2.17,0.91,3.3c0,1.17-0.29,2.28-0.88,3.33s-1.4,1.87-2.46,2.46 c-0.97,0.55-2.01,0.84-3.1,0.88h-10.35c-2.89,0-5.38-0.64-7.49-1.93c-2.1-1.29-3.66-2.87-4.68-4.74c-1.33,2.57-3.61,4.33-6.84,5.26 c-3.24,0.94-6.59,1.4-10.06,1.4H380.23z M407.19,157.89c1.4-3.08,1.35-5.17-0.15-6.26c-1.5-1.09-3.33-1.26-5.5-0.5 c-2.16,0.76-3.52,2.39-4.06,4.88c-0.39,3.08-0.01,5.11,1.14,6.08c1.15,0.97,2.56,1.06,4.24,0.26 C404.54,161.56,405.98,160.07,407.19,157.89z"/> <path d="M424.96,170.93c1.13,0,2.22,0.28,3.27,0.85c1.05,0.57,1.88,1.38,2.49,2.46s0.91,2.17,0.91,3.3c0,1.17-0.29,2.28-0.88,3.33 c-0.58,1.05-1.4,1.87-2.46,2.46c-1.05,0.58-2.16,0.88-3.33,0.88c-1.13,0-2.23-0.29-3.3-0.88c-1.07-0.58-1.89-1.4-2.46-2.46 c-0.56-1.05-0.85-2.16-0.85-3.33c0-1.13,0.29-2.23,0.88-3.3s1.4-1.89,2.46-2.46S423.83,170.93,424.96,170.93z M425.02,170.93h9.01 c4.09-0.35,6.95-2.23,8.57-5.64c1.62-3.41,1.94-6.91,0.96-10.5c-1.17-4.17-1.34-7.02-0.53-8.54c0.82-1.52,2.09-1.97,3.83-1.34 c1.73,0.62,3.39,2.06,4.97,4.3c1.58,2.24,2.56,5.06,2.95,8.45c0.43,4.37-0.06,8.49-1.46,12.37c-1.4,3.88-3.76,7.11-7.08,9.68 c-3.2,2.5-7.37,4-12.51,4.5c-5.65,0-8.56,0-8.71,0V170.93z"/> </g> <g> <circle fill="#7FCDEE" cx="393.47" cy="122.8" r="6.48"/> <circle fill="#7FCDEE" cx="411.62" cy="122.8" r="10.37"/> <circle fill="#7FCDEE" cx="437.04" cy="122.8" r="17.9"/> </g></svg></div>
   <div class="topbar-btns">
@@ -641,7 +652,7 @@ body{padding-bottom:4.8rem !important}
         <button class="action-btn" id="gdriveDownloadBtn" onclick="gdriveDownload(true)" style="display:none;margin-bottom:0;flex:1">⬇ دانلود</button>
       </div>
     </div>
-    <div style="text-align:center;padding-top:0.4rem;font-size:0.62rem;color:var(--text3)">نقطه — از همین نقطه شروع کن · نسخه <span id="appVersionLabel"></span></div>
+    <div style="text-align:center;padding-top:0.4rem;font-size:0.62rem;color:var(--text3)">نقطه — از همین نقطه شروع کن · نسخه <span id="appVersionLabel" onclick="openChangelog()" style="cursor:pointer;text-decoration:underline"></span></div>
   </div>
 </div>
 
@@ -750,7 +761,41 @@ function getSettings() {
 
 // ── نسخه‌بندی داده (Schema Versioning) ──
 // هر بار ساختار داده عوض شد، یه بلوک جدید با شماره بالاتر اضافه کن و SCHEMA_VERSION رو زیاد کن.
-const APP_VERSION = '4.8';
+const APP_VERSION = '5.0';
+// فهرست تغییرات نسخه‌ها (جدیدترین بالا)
+const CHANGELOG = [
+  {v:'5.0', items:['تازه‌چه اضافه شد: بعد از هر آپدیت، تغییرات نسخه‌ی جدید رو می‌بینی','از تنظیمات هم می‌تونی روی شماره‌ی نسخه بزنی و تغییرات رو ببینی']},
+  {v:'4.9', items:['سینک گوگل‌درایو امن‌تر شد: دیگه وقتی دو دستگاه هم‌زمان تغییر می‌دن، داده‌ای گم نمی‌شه','تازه‌چه (همین پنجره) اضافه شد']},
+  {v:'4.5', items:['هفت تم رنگی: آسمان، بهار، ماه صورتی، کهکشان، آفتابگردون، سکوت، نیمه‌شب','رنگ هدر و نوار وضعیت با هر تم هماهنگ می‌شه']},
+  {v:'4.0', items:['بازطراحی کامل ظاهر با تم آبی آسمانی','نقطه‌ی مرکزی داشبورد که با پیشرفت روزت رشد می‌کنه','لوگو و صفحه‌ی شروع جدید']},
+  {v:'3.9', items:['یادآوری کارهای زمان‌دار موقع باز کردن اپ','نوتیفیکیشن‌ها قابل‌اعتمادتر شدن']},
+  {v:'3.6', items:['سینک هوشمند با تشخیص تعارض بین دستگاه‌ها']}
+];
+function openChangelog(){
+  var body=document.getElementById('changelogBody');
+  if(body){
+    var h='';
+    CHANGELOG.forEach(function(c,idx){
+      h+='<div style="margin-bottom:'+(idx===0?'1rem':'0.85rem')+'">';
+      h+='<div style="display:flex;align-items:center;gap:0.4rem;margin-bottom:0.4rem"><span style="font-weight:800;color:var(--accent2);font-size:'+(idx===0?'0.95rem':'0.8rem')+'">نسخه '+c.v+'</span>'+(idx===0?'<span style="background:var(--accent-soft);color:var(--accent2);font-size:0.6rem;padding:0.1rem 0.4rem;border-radius:6px;font-weight:700">جدید</span>':'')+'</div>';
+      h+='<ul style="margin:0;padding-right:1.1rem;list-style:none">';
+      c.items.forEach(function(it){h+='<li style="font-size:0.78rem;color:var(--text2);line-height:1.7;position:relative;padding-right:0.9rem"><span style="position:absolute;right:0;top:0.5rem;width:5px;height:5px;border-radius:50%;background:var(--accent);display:inline-block"></span>'+it+'</li>';});
+      h+='</ul></div>';
+    });
+    body.innerHTML=h;
+  }
+  var m=document.getElementById('changelogModal');if(m)m.classList.add('open');
+}
+function closeChangelog(){var m=document.getElementById('changelogModal');if(m)m.classList.remove('open');}
+function showChangelogIfNew(){
+  try{
+    var seen=localStorage.getItem('noghte_seen_version');
+    if(seen===APP_VERSION)return;          // قبلاً همین نسخه رو دیده
+    localStorage.setItem('noghte_seen_version',APP_VERSION);
+    if(!seen)return;                        // کاربر قدیمی/جدید: بی‌صدا ست کن، نشون نده
+    openChangelog();                        // آپدیت شده → نشون بده
+  }catch(e){}
+}
 const SCHEMA_VERSION = 3;
 function migrate() {
   var v = store._version || 1;
@@ -1716,11 +1761,23 @@ function gdriveFindFile(){
     .then(function(d){_gdFileId=(d.files&&d.files.length)?d.files[0].id:null;return _gdFileId;});
 }
 
-function gdriveReadRemote(){
+var _gdReadVersion=null;
+function gdriveGetVersion(){
   if(!_gdFileId)return Promise.resolve(null);
-  return gdriveApi('https://www.googleapis.com/drive/v3/files/'+_gdFileId+'?alt=media')
-    .then(function(r){return r.text();})
-    .then(function(t){try{return JSON.parse(t);}catch(e){return null;}});
+  return gdriveApi('https://www.googleapis.com/drive/v3/files/'+_gdFileId+'?fields=version')
+    .then(function(r){return r.json();})
+    .then(function(d){return (d&&d.version)?String(d.version):null;})
+    .catch(function(){return null;});
+}
+
+function gdriveReadRemote(){
+  if(!_gdFileId){_gdReadVersion=null;return Promise.resolve(null);}
+  return gdriveGetVersion().then(function(v){
+    _gdReadVersion=v;
+    return gdriveApi('https://www.googleapis.com/drive/v3/files/'+_gdFileId+'?alt=media')
+      .then(function(r){return r.text();})
+      .then(function(t){try{return JSON.parse(t);}catch(e){return null;}});
+  });
 }
 
 function gdriveNewId(){return Date.now().toString(36)+Math.random().toString(36).slice(2,8);}
@@ -1733,16 +1790,22 @@ function gdriveApplyRemote(remote){
   gdriveSetBase(remote._writeId||'',store._lastModified||0);
 }
 
-function gdriveWriteRemote(){
-  store._writeId=gdriveNewId();persist();
-  var meta={name:GDRIVE_FILENAME,mimeType:'application/json'};
-  var boundary='----planner'+Date.now();
-  var multipart='--'+boundary+'\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n'+JSON.stringify(meta)+'\r\n--'+boundary+'\r\nContent-Type: application/json\r\n\r\n'+JSON.stringify(store)+'\r\n--'+boundary+'--';
-  var method=_gdFileId?'PATCH':'POST';
-  var url=_gdFileId?'https://www.googleapis.com/upload/drive/v3/files/'+_gdFileId+'?uploadType=multipart':'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart';
-  return gdriveApi(url,{method:method,headers:{'Content-Type':'multipart/related; boundary='+boundary},body:multipart})
-    .then(function(r){return r.json();})
-    .then(function(d){if(d.id)_gdFileId=d.id;gdriveSetBase(store._writeId,store._lastModified||0);return d;});
+function gdriveWriteRemote(checkVersion){
+  var pre=(checkVersion&&_gdFileId)?gdriveGetVersion():Promise.resolve(null);
+  return pre.then(function(curV){
+    if(checkVersion&&_gdFileId&&curV!==null&&_gdReadVersion!==null&&curV!==_gdReadVersion){
+      var err=new Error('یکی هم‌زمان روی درایو نوشت');err.code='REMOTE_CHANGED';throw err;
+    }
+    store._writeId=gdriveNewId();persist();
+    var meta={name:GDRIVE_FILENAME,mimeType:'application/json'};
+    var boundary='----planner'+Date.now();
+    var multipart='--'+boundary+'\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n'+JSON.stringify(meta)+'\r\n--'+boundary+'\r\nContent-Type: application/json\r\n\r\n'+JSON.stringify(store)+'\r\n--'+boundary+'--';
+    var method=_gdFileId?'PATCH':'POST';
+    var url=_gdFileId?'https://www.googleapis.com/upload/drive/v3/files/'+_gdFileId+'?uploadType=multipart':'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart';
+    return gdriveApi(url,{method:method,headers:{'Content-Type':'multipart/related; boundary='+boundary},body:multipart})
+      .then(function(r){return r.json();})
+      .then(function(d){if(d.id)_gdFileId=d.id;gdriveSetBase(store._writeId,store._lastModified||0);_gdReadVersion=null;return d;});
+  });
 }
 
 function gdriveUpload(interactive){
@@ -1793,7 +1856,14 @@ function gdriveSync(interactive){
       return;
     }
     if(localChanged){
-      return gdriveWriteRemote().then(function(){gdriveMarkSync('ارسال به درایو');if(interactive)showToast('✓ روی درایو ذخیره شد','');});
+      return gdriveWriteRemote(true).then(function(){gdriveMarkSync('ارسال به درایو');if(interactive)showToast('✓ روی درایو ذخیره شد','');})
+        .catch(function(e){
+          if(e&&e.code==='REMOTE_CHANGED'){
+            // یکی هم‌زمان نوشت → دوباره سینک کن؛ این‌بار تعارض تشخیص داده می‌شه
+            return gdriveSync(interactive);
+          }
+          throw e;
+        });
     }
     gdriveMarkSync('همگام');if(interactive)showToast('✓ همه‌چی همگامه','');
   }).catch(function(e){if(interactive)showToast('خطا: '+e.message,'warn');});
@@ -2092,6 +2162,7 @@ scheduleTaskAlerts();
 showDueReminder();
 setInterval(updateTimedProgress, 30000);
 gdriveAutoSync();
+setTimeout(showChangelogIfNew, 2900);
 
 
 function showToast(msg, type) {
