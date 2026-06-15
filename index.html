@@ -761,9 +761,10 @@ function getSettings() {
 
 // ── نسخه‌بندی داده (Schema Versioning) ──
 // هر بار ساختار داده عوض شد، یه بلوک جدید با شماره بالاتر اضافه کن و SCHEMA_VERSION رو زیاد کن.
-const APP_VERSION = '5.0';
+const APP_VERSION = '5.1';
 // فهرست تغییرات نسخه‌ها (جدیدترین بالا)
 const CHANGELOG = [
+  {v:'5.1', items:['جمله‌ی انگیزشی بالای صفحه حالا روزی یک‌بار عوض می‌شه (نه با هر رفرش)']},
   {v:'5.0', items:['تازه‌چه اضافه شد: بعد از هر آپدیت، تغییرات نسخه‌ی جدید رو می‌بینی','از تنظیمات هم می‌تونی روی شماره‌ی نسخه بزنی و تغییرات رو ببینی']},
   {v:'4.9', items:['سینک گوگل‌درایو امن‌تر شد: دیگه وقتی دو دستگاه هم‌زمان تغییر می‌دن، داده‌ای گم نمی‌شه','تازه‌چه (همین پنجره) اضافه شد']},
   {v:'4.5', items:['هفت تم رنگی: آسمان، بهار، ماه صورتی، کهکشان، آفتابگردون، سکوت، نیمه‌شب','رنگ هدر و نوار وضعیت با هر تم هماهنگ می‌شه']},
@@ -2336,8 +2337,12 @@ function updateHero() {
   if(steps){
     steps.textContent = done>0 ? (done+' قدم جلوتر') : 'هنوز شروع نکردی';
   }
-  var randomIdx = Math.floor(Math.random() * HERO_QUOTES.length);
-  set('heroQuote', HERO_QUOTES[randomIdx]);
+  // یک جمله ثابت برای هر روز (بر اساس تاریخ امروز، نه تصادفی در هر رفرش)
+  var qkey = todayKey();
+  var qh = 0;
+  for (var qi = 0; qi < qkey.length; qi++) { qh = (qh * 31 + qkey.charCodeAt(qi)) >>> 0; }
+  var quoteIdx = qh % HERO_QUOTES.length;
+  set('heroQuote', HERO_QUOTES[quoteIdx]);
 }
 
 // ════ OVERVIEW PREVIEWS ════
