@@ -196,6 +196,10 @@ body{padding-bottom:4.8rem !important}
 .carry-badge{font-size:0.58rem;font-weight:700;flex-shrink:0;white-space:nowrap;padding:0.05rem 0.3rem;border-radius:10px;line-height:1.4}
 .carry-dots{display:flex;align-items:center;gap:2.5px;flex-shrink:0;margin-top:0.45rem}
 .carry-dot{width:6px;height:6px;border-radius:50%}
+.drag-handle{color:var(--text3);font-size:0.95rem;cursor:grab;flex-shrink:0;padding:0.1rem 0.25rem;margin-top:0.2rem;touch-action:none;user-select:none;-webkit-user-select:none;opacity:0.45;transition:opacity 0.15s}
+.task-item:hover .drag-handle{opacity:0.75}
+.drag-handle:active{cursor:grabbing}
+.task-item.dragging{background:var(--surface2);box-shadow:0 6px 20px rgba(28,52,96,0.16);border-color:var(--border2);opacity:0.97}
 /* ── افکت تیک عادت ── */
 .habit-celebrate{position:fixed;top:50%;left:50%;font-size:5rem;z-index:99999;pointer-events:none;will-change:transform,opacity;animation:habitPop 1s cubic-bezier(.2,.7,.3,1) forwards;filter:drop-shadow(0 0 22px var(--accent-glow))}
 @keyframes habitPop{0%{opacity:0;transform:translate(-50%,-50%) scale(0.3) rotate(-14deg)}22%{opacity:1;transform:translate(-50%,-58%) scale(1.3) rotate(8deg)}50%{opacity:1;transform:translate(-50%,-64%) scale(1.05) rotate(-4deg)}100%{opacity:0;transform:translate(-50%,-130%) scale(0.85) rotate(0)}}
@@ -790,9 +794,10 @@ function getSettings() {
 
 // ── نسخه‌بندی داده (Schema Versioning) ──
 // هر بار ساختار داده عوض شد، یه بلوک جدید با شماره بالاتر اضافه کن و SCHEMA_VERSION رو زیاد کن.
-const APP_VERSION = '5.7';
+const APP_VERSION = '5.8';
 // فهرست تغییرات نسخه‌ها (جدیدترین بالا)
 const CHANGELOG = [
+  {v:'5.8', items:['جابه‌جایی کارها با کشیدن دستگیره (☰) کنار هر کار — ترتیب دلخواه خودت']},
   {v:'5.7', items:['کار زمان‌دارِ معوق به‌جای نقطه، خط قرمزِ پُر نشان می‌ده (یعنی زمانش گذشته)']},
   {v:'5.6', items:['نشان کارهای معوق به نقطه‌های رنگی تغییر کرد (تعداد نقطه = تعداد روز، تا ۷)']},
   {v:'5.5', items:['متن راهنمای بخش‌های کتاب، پادکست و فیلم حالا برای هرکدام درسته']},
@@ -1076,6 +1081,12 @@ function renderTaskList(containerId, tasks, showTime, isMeeting) {
     }
 
     item.appendChild(del);
+    item.dataset.idx = i;
+    const handle = document.createElement('span');
+    handle.className = 'drag-handle';
+    handle.textContent = '☰';
+    handle.title = 'برای جابه‌جایی بکش';
+    item.appendChild(handle);
     // خط وضعیت زیر کار: رنگ هشدار انتقال یا پرشدن تایمر
     const ul = buildTaskUnderline(t, isToday);
     if (ul) { item.style.position = 'relative'; item.appendChild(ul); }
@@ -1090,6 +1101,55 @@ function renderTaskList(containerId, tasks, showTime, isMeeting) {
       c.appendChild(note);
     }
   });
+  if (c && !c._dragInit) { attachDragReorder(c, containerId); c._dragInit = true; }
+}
+
+// جابه‌جایی کارها با کشیدن دستگیره (☰)
+function attachDragReorder(listEl, containerId){
+  var dragEl=null, pid=null;
+  function yOf(e){ return (e.clientY!=null)?e.clientY:(e.touches&&e.touches[0]?e.touches[0].clientY:0); }
+  listEl.addEventListener('pointerdown', function(e){
+    var h=e.target.closest ? e.target.closest('.drag-handle') : null;
+    if(!h || !listEl.contains(h)) return;
+    dragEl=h.closest('.task-item'); if(!dragEl) return;
+    e.preventDefault();
+    pid=e.pointerId;
+    dragEl.classList.add('dragging');
+    try{ listEl.setPointerCapture(pid); }catch(_){}
+  });
+  listEl.addEventListener('pointermove', function(e){
+    if(!dragEl) return;
+    e.preventDefault();
+    var y=yOf(e);
+    var sibs=[].slice.call(listEl.querySelectorAll('.task-item:not(.dragging)'));
+    var ref=null;
+    for(var k=0;k<sibs.length;k++){
+      var r=sibs[k].getBoundingClientRect();
+      if(y < r.top + r.height/2){ ref=sibs[k]; break; }
+    }
+    if(ref) listEl.insertBefore(dragEl, ref);
+    else listEl.appendChild(dragEl);
+  });
+  function finish(){
+    if(!dragEl) return;
+    dragEl.classList.remove('dragging');
+    try{ listEl.releasePointerCapture(pid); }catch(_){}
+    var order=[].slice.call(listEl.querySelectorAll('.task-item')).map(function(el){return parseInt(el.dataset.idx,10);});
+    dragEl=null; pid=null;
+    reorderTaskData(containerId, order);
+  }
+  listEl.addEventListener('pointerup', finish);
+  listEl.addEventListener('pointercancel', finish);
+}
+function reorderTaskData(containerId, order){
+  var data=getDayData(activeKey());
+  var arr=data[containerId]; if(!arr) return;
+  if(order.length!==arr.length){ renderDay(); return; }
+  var seen={}, ok=true;
+  order.forEach(function(x){ if(isNaN(x)||seen[x]){ ok=false; } seen[x]=1; });
+  if(!ok){ renderDay(); return; }
+  data[containerId]=order.map(function(idx){ return arr[idx]; });
+  save(); renderDay();
 }
 
 // رنگ هشدار بر اساس تعداد روزهای انتقال: سبز → زرد → نارنجی → قرمز → قرمز تیره
