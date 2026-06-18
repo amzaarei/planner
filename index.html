@@ -194,6 +194,8 @@ body{padding-bottom:4.8rem !important}
 .task-dot{position:absolute;right:0.5rem;bottom:4px;width:7px;height:7px;border-radius:50%;pointer-events:none}
 .created-time{font-size:0.6rem;color:var(--text3);flex-shrink:0;white-space:nowrap;opacity:0.65}
 .carry-badge{font-size:0.58rem;font-weight:700;flex-shrink:0;white-space:nowrap;padding:0.05rem 0.3rem;border-radius:10px;line-height:1.4}
+.carry-dots{display:flex;align-items:center;gap:2.5px;flex-shrink:0;margin-top:0.45rem}
+.carry-dot{width:6px;height:6px;border-radius:50%}
 /* ── افکت تیک عادت ── */
 .habit-celebrate{position:fixed;top:50%;left:50%;font-size:5rem;z-index:99999;pointer-events:none;will-change:transform,opacity;animation:habitPop 1s cubic-bezier(.2,.7,.3,1) forwards;filter:drop-shadow(0 0 22px var(--accent-glow))}
 @keyframes habitPop{0%{opacity:0;transform:translate(-50%,-50%) scale(0.3) rotate(-14deg)}22%{opacity:1;transform:translate(-50%,-58%) scale(1.3) rotate(8deg)}50%{opacity:1;transform:translate(-50%,-64%) scale(1.05) rotate(-4deg)}100%{opacity:0;transform:translate(-50%,-130%) scale(0.85) rotate(0)}}
@@ -788,9 +790,11 @@ function getSettings() {
 
 // ── نسخه‌بندی داده (Schema Versioning) ──
 // هر بار ساختار داده عوض شد، یه بلوک جدید با شماره بالاتر اضافه کن و SCHEMA_VERSION رو زیاد کن.
-const APP_VERSION = '5.5';
+const APP_VERSION = '5.7';
 // فهرست تغییرات نسخه‌ها (جدیدترین بالا)
 const CHANGELOG = [
+  {v:'5.7', items:['کار زمان‌دارِ معوق به‌جای نقطه، خط قرمزِ پُر نشان می‌ده (یعنی زمانش گذشته)']},
+  {v:'5.6', items:['نشان کارهای معوق به نقطه‌های رنگی تغییر کرد (تعداد نقطه = تعداد روز، تا ۷)']},
   {v:'5.5', items:['متن راهنمای بخش‌های کتاب، پادکست و فیلم حالا برای هرکدام درسته']},
   {v:'5.4', items:['عنوان خالی کارها/عادت‌ها/دوره‌ها حالا متن راهنما داره','خط معوق‌بودن کار به یک نقطه‌ی کوتاه تبدیل شد (خط بلند فقط برای کارهای زمان‌دار)','نمایش بهتر عنوان‌های چندخطی']},
   {v:'5.3', items:['دو تم جدید: برکه (فیروزه‌ای آرام) و پاییز (قهوه‌ای گرم)','تم سکوت به خاکستری خنثی تغییر کرد','آیکن‌های چند تم به‌روز شد']},
@@ -1044,17 +1048,21 @@ function renderTaskList(containerId, tasks, showTime, isMeeting) {
       item.appendChild(dt);
     }
 
-    // نشان تعداد روزهای انتقال (کار معوق)
-    if (!t.done && (t.carryCount||0) > 0) {
-      const cbadge = document.createElement('span');
-      cbadge.className = 'carry-badge';
+    // نشان معوقی (فقط کار بدون‌زمان): نقطه‌های رنگی (تعداد = روزهای انتقال، تا سقف ۷)
+    if (!t.done && (t.carryCount||0) > 0 && !t.scheduledTime) {
       const cc = t.carryCount;
       const col = carryColor(cc);
-      cbadge.style.color = col;
-      cbadge.style.background = 'rgba(128,128,128,0.10)';
-      cbadge.textContent = '⤳ '+cc+' روز';
-      cbadge.title = 'این کار '+cc+' روز پشت‌سرهم منتقل شده';
-      item.appendChild(cbadge);
+      const dots = document.createElement('span');
+      dots.className = 'carry-dots';
+      dots.title = 'این کار '+cc+' روز پشت‌سرهم منتقل شده';
+      const n = Math.min(cc, 7);
+      for (let di=0; di<n; di++){
+        const d = document.createElement('span');
+        d.className = 'carry-dot';
+        d.style.background = col;
+        dots.appendChild(d);
+      }
+      item.appendChild(dots);
     }
 
     // زمان ثبت کار زمان‌دار (برای کارهای زمان‌دار)
@@ -1113,12 +1121,16 @@ function buildTaskUnderline(t, isToday) {
   var fill = document.createElement('div');
   fill.className = 'task-underline-fill';
   var carry = t.carryCount || 0;
-  // کار معوق: فقط یه نقطه‌ی کوتاه (نه خط تمام‌عرض)
+  // کار زمان‌دارِ معوق: خط قرمزِ پُر (زمانش حتماً گذشته)
+  if (t.scheduledTime && carry > 0) {
+    fill.style.width = '100%';
+    fill.style.background = '#c0392b';
+    wrap.appendChild(fill);
+    return wrap;
+  }
+  // کار معوقِ بدون‌زمان با نقطه‌های کنار کار نشان داده می‌شه (اینجا خطی لازم نیست)
   if (carry > 0) {
-    var dot = document.createElement('div');
-    dot.className = 'task-dot';
-    dot.style.background = carryColor(carry);
-    return dot;
+    return null;
   }
   // کار زمان‌دار امروز: خط تایمر که تا زمان مقرر پُر می‌شه و رنگ عوض می‌کنه
   if (t.scheduledTime && t.createdAt && isToday) {
