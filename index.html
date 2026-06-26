@@ -220,6 +220,9 @@ body{padding-bottom:4.8rem !important}
 .hub-label-icon{font-size:1rem;flex-shrink:0;width:1.4rem;text-align:center}
 .hub-label-input{flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:0.4rem 0.6rem;color:var(--text);font-family:'Vazirmatn',sans-serif;font-size:0.8rem;outline:none}
 .hub-label-input:focus{border-color:var(--accent)}
+.seg-mini{display:flex;gap:0.25rem;background:var(--surface2);border-radius:8px;padding:0.15rem}
+.seg-mini-btn{font-size:0.66rem;font-weight:700;padding:0.25rem 0.55rem;border-radius:6px;border:none;background:transparent;color:var(--text3);cursor:pointer;font-family:'Vazirmatn',sans-serif}
+.seg-mini-btn.active{background:var(--accent);color:var(--on-accent)}
 .lib-seg{display:flex;gap:0.4rem;padding:0.6rem 0.7rem 0.2rem}
 .lib-seg-btn{flex:1;text-align:center;font-size:0.74rem;font-weight:700;padding:0.45rem;border-radius:9px;color:var(--text2);background:var(--surface2);border:none;cursor:pointer;font-family:'Vazirmatn',sans-serif;transition:all .15s}
 .lib-seg-btn.active{background:var(--accent);color:var(--on-accent)}
@@ -264,6 +267,26 @@ body{padding-bottom:4.8rem !important}
 .qshare{background:var(--accent);color:var(--on-accent)}
 .qdel{background:var(--red-soft);color:var(--red)}
 #libModal{z-index:100050}
+#cropModal{z-index:100058}
+#habitMonthModal{z-index:100052}
+.hm-nav{display:flex;justify-content:space-between;margin-bottom:0.7rem}
+.hm-nav button{background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:0.35rem 0.7rem;font-size:0.74rem;font-family:'Vazirmatn',sans-serif;color:var(--text2);cursor:pointer}
+.hm-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:0.3rem}
+.hm-cell{aspect-ratio:1;border-radius:7px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:0.62rem;color:var(--text3)}
+.hm-cell.done{background:var(--accent);color:var(--on-accent);font-weight:700}
+.hm-cell.future{opacity:0.35}
+.hm-cell.today{box-shadow:0 0 0 1.5px var(--accent2)}
+.hm-summary{text-align:center;font-size:0.76rem;color:var(--text2);margin-top:0.8rem}
+.insight-item{display:flex;gap:0.6rem;align-items:flex-start;padding:0.6rem 0.5rem;border-bottom:1px solid var(--border)}
+.insight-item:last-child{border-bottom:none}
+.insight-icon{width:1.8rem;height:1.8rem;border-radius:50%;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0}
+.insight-title{font-size:0.74rem;font-weight:800;color:var(--accent2);margin-bottom:0.2rem}
+.insight-body{font-size:0.82rem;color:var(--text);line-height:1.7}
+.insight-empty{font-size:0.8rem;color:var(--text3);text-align:center;padding:1rem 0.75rem;line-height:1.8}
+.crop-stage{display:flex;justify-content:center;background:var(--surface2);border-radius:12px;padding:10px}
+#cropCanvas{border-radius:8px;touch-action:none;background:#000;cursor:grab;max-width:100%}
+.crop-zoom{display:flex;align-items:center;gap:10px;margin-top:12px;color:var(--text2);font-size:1rem}
+.crop-zoom input{flex:1}
 #shareModal{z-index:100055}
 .share-card{width:300px;height:533px;border-radius:18px;padding:34px 26px;display:flex;flex-direction:column;box-sizing:border-box;overflow:hidden;text-align:center}
 .sc-cover{display:flex;justify-content:center;margin-bottom:16px;flex-shrink:0}
@@ -402,6 +425,21 @@ body{padding-bottom:4.8rem !important}
     <div class="share-fonts" id="shareFonts"></div>
     <div class="share-tpls" id="shareTpls"></div>
     <button onclick="exportShareCard()" class="share-save-btn">📷 ذخیره / اشتراک عکس</button>
+  </div>
+</div>
+
+<div class="overlay" id="habitMonthModal">
+  <div class="modal-box" style="max-width:360px">
+    <div class="modal-header">
+      <div class="modal-title" id="habitMonthTitle">عادت</div>
+      <button class="modal-close" onclick="closeHabitMonth()">✕</button>
+    </div>
+    <div class="hm-nav">
+      <button onclick="habitMonthNav(-1)">‹ ماه قبل</button>
+      <button onclick="habitMonthNav(1)" id="habitMonthNext">ماه بعد ›</button>
+    </div>
+    <div class="hm-grid" id="habitMonthGrid"></div>
+    <div class="hm-summary" id="habitMonthSummary"></div>
   </div>
 </div>
 
@@ -685,6 +723,27 @@ body{padding-bottom:4.8rem !important}
     <div class="card-body" id="libraryShelves" style="padding:0 0 0.5rem"></div>
   </div>
 
+  <div class="overlay" id="cropModal">
+    <div class="modal-box" style="max-width:320px">
+      <div class="modal-header">
+        <div class="modal-title">برش تصویر</div>
+        <button class="modal-close" onclick="cancelCrop()">✕</button>
+      </div>
+      <div class="crop-stage">
+        <canvas id="cropCanvas" width="240" height="360"></canvas>
+      </div>
+      <div class="crop-zoom">
+        <span>−</span>
+        <input type="range" id="cropZoom" min="1" max="4" step="0.01" value="1">
+        <span>+</span>
+      </div>
+      <div style="display:flex;gap:0.5rem;margin-top:0.7rem">
+        <button onclick="cancelCrop()" class="lib-cover-btn" style="flex:1;text-align:center">لغو</button>
+        <button onclick="applyCrop()" class="share-save-btn" style="flex:1;margin-top:0">تأیید</button>
+      </div>
+    </div>
+  </div>
+
   <div class="overlay" id="libModal">
     <div class="modal-box" style="max-width:380px">
       <div class="modal-header">
@@ -744,9 +803,12 @@ body{padding-bottom:4.8rem !important}
     <div class="card-head">
       <div class="card-head-left">
         <svg class="card-icon-svg" viewBox="0 0 24 24" style="color:var(--accent)"><path d="M2 12c2-5 4-7 6-7s4 5 6 5 4-5 6-5"/></svg>
-        <span class="card-title" style="color:var(--accent)">حس و حال هفته</span>
+        <span class="card-title" style="color:var(--accent)" id="moodChartTitle">حس و حال هفته</span>
       </div>
-      <span style="font-size:0.65rem;color:var(--text3)">۷ روز</span>
+      <div class="seg-mini" id="moodRangeSeg">
+        <button class="seg-mini-btn active" onclick="setMoodRange('week')">هفته</button>
+        <button class="seg-mini-btn" onclick="setMoodRange('month')">ماه</button>
+      </div>
     </div>
     <div class="card-body"><div class="wave-wrap" id="moodChart"></div></div>
   </div>
@@ -760,15 +822,14 @@ body{padding-bottom:4.8rem !important}
     </div>
     <div class="card-body"><div id="habitStats"></div></div>
   </div>
-  <div class="card" id="productivity-card">
+  <div class="card" id="insights-card">
     <div class="card-head">
       <div class="card-head-left">
-        <svg class="card-icon-svg" viewBox="0 0 24 24" style="color:var(--blue)"><path d="M21 21H4.6A1.6 1.6 0 013 19.4V3"/><path d="M7 16l4-4 4 4 4-6"/></svg>
-        <span class="card-title" style="color:var(--blue)">روند بهره‌وری</span>
+        <svg class="card-icon-svg" viewBox="0 0 24 24" style="color:var(--accent2)"><path d="M9 18h6M10 22h4M12 2a7 7 0 00-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0012 2z"/></svg>
+        <span class="card-title" style="color:var(--accent2)">کشف‌های من</span>
       </div>
-      <span style="font-size:0.65rem;color:var(--text3)">۷ روز</span>
     </div>
-    <div class="card-body"><div id="prodChart"></div></div>
+    <div class="card-body"><div id="insightsBody"></div></div>
   </div>
   <div class="card" style="cursor:pointer;margin-bottom:0.5rem" onclick="openSettings()">
     <div class="card-head">
@@ -984,9 +1045,24 @@ function getSettings() {
 
 // ── نسخه‌بندی داده (Schema Versioning) ──
 // هر بار ساختار داده عوض شد، یه بلوک جدید با شماره بالاتر اضافه کن و SCHEMA_VERSION رو زیاد کن.
-const APP_VERSION = '7.9';
+const APP_VERSION = '9.4';
 // فهرست تغییرات نسخه‌ها (جدیدترین بالا)
 const CHANGELOG = [
+  {v:'9.4', items:['اصلاح جمله‌ی خوش‌آمدِ کشف‌ها']},
+  {v:'9.3', items:['کشف‌های نگاه کلی مهربان‌تر شد: فقط الگوهای مثبت و دلگرم‌کننده نشان داده می‌شوند، بدون هیچ قضاوت یا نکته‌ی منفی']},
+  {v:'9.2', items:['رفع باگ مهم: یک گزارش قدیمی روزهای خالیِ تکراری می‌ساخت؛ این روزها پاک‌سازی شدند','امتیازدهی حس‌وحال حالا دقیقاً بر اساس ترتیبی است که خودت در تنظیمات چیده‌ای','نمودار حس‌وحال و تحلیل‌ها هماهنگ شدند']},
+  {v:'9.1', items:['تحلیل کشف‌ها منصفانه‌تر شد: مقایسه بر اساس میانه‌ی فعالیت خودت، نه یک خط ثابت','حذف نمایش تشخیصی موقت']},
+  {v:'9.0', items:['نمایش موقت اعداد تشخیصی زیر کارت کشف‌ها برای تنظیم دقیق آستانه‌ها']},
+  {v:'8.9', items:['بخش جدید «کشف‌های من» در نگاه کلی: تحلیل واقعی رابطه‌ی حس‌وحال و انجام کارها','اگر رابطه‌ی معناداری پیدا نشود، چیزی نمایش داده نمی‌شود']},
+  {v:'8.8', items:['رفع قطعی باگ عادت‌ها: پنجره‌ی تقویم ماهانه اشتباهی داخل تب رشد بود و پنهان می‌ماند؛ حالا درست باز می‌شود']},
+  {v:'8.7', items:['رفع باگ باز نشدن عادت‌ها: رویداد کلیک مستقیم به نوارها وصل شد']},
+  {v:'8.6', items:['نسخه‌ی تشخیصی برای پیدا کردن علت باز نشدن عادت‌ها']},
+  {v:'8.5', items:['کارت روند بهره‌وری حذف شد','رفع باگ باز نشدن تقویم ماهانه‌ی عادت‌ها (که به‌خاطر اجرای کارت بهره‌وری قبل از آن بود)']},
+  {v:'8.4', items:['رفع باگ: نمایِ ماهانه‌ی عادت دیگر باز می‌شود (یک خط کد مشکل‌ساز حذف شد)']},
+  {v:'8.3', items:['حس‌وحال حالا قابل تنظیم به بازه‌ی هفته یا ماه است','با زدن روی هر عادت، می‌توانی تقویم ماهانه‌ی همان عادت را ببینی']},
+  {v:'8.2', items:['قالب‌های کارت اشتراک سرزنده‌تر شدند: گرادیانت سه‌مرحله‌ای با رنگ روشن‌تر در بالا و تیره در پایین برای خوانایی']},
+  {v:'8.1', items:['هنگام افزودن جلد/پوستر/کاور، حالا می‌تونی تصویر را در کادر ۲:۳ جابه‌جا و زوم کنی و برش بزنی']},
+  {v:'8.0', items:['رفع باگ: زدن روی کتاب/فیلم دیگر اشتباهی دیالوگ حذف را باز نمی‌کند']},
   {v:'7.9', items:['کارت اشتراک: عنوان و نویسنده کمی کوچک‌تر شدند و فضای بیشتری به متن نقل‌قول داده شد']},
   {v:'7.8', items:['فونت‌های کارت اشتراک به‌روز شد (پینار، میرمد، نوفر، یکان)','عنوان و نویسنده‌ی کتاب همیشه با فونت پینار درشت نمایش داده می‌شوند']},
   {v:'7.7', items:['کارت اشتراک: چند فونت زیبا برای انتخاب اضافه شد (لیلا، نوفر، دلبر، پینار) که آفلاین هم کار می‌کنند']},
@@ -1048,7 +1124,7 @@ function showChangelogIfNew(){
     openChangelog();                        // آپدیت شده → نشون بده
   }catch(e){}
 }
-const SCHEMA_VERSION = 3;
+const SCHEMA_VERSION = 4;
 function migrate() {
   var v = store._version || 1;
   // v1 → v2: فیلدهای زمان ثبت و شمارنده‌ی انتقال برای کارهای قدیمی
@@ -1071,8 +1147,28 @@ function migrate() {
     if (store._settings && store._settings.gdriveClientId == null) store._settings.gdriveClientId = '';
     v = 3;
   }
-  // نسخه‌های بعدی اینجا اضافه می‌شن:
-  // if (v < 4) { ...; v = 4; }
+  // v3 → v4: پاک‌سازی کلیدهای تاریخِ بدفرمت (بدون صفرِ ابتدایی) که خالی‌اند
+  if (v < 4) {
+    var stdKey = /^\d{4}-\d{2}-\d{2}$/;     // فرمت درست: YYYY-MM-DD
+    var anyDate = /^\d{4}-\d{1,2}-\d{1,2}$/;
+    function dayEmpty(o){
+      if(!o || typeof o!=='object') return true;
+      var hasMood=(o.mood||'').trim();
+      var hasTasks=(o.freeTasks&&o.freeTasks.length)||(o.timedTasks&&o.timedTasks.length);
+      var hasMeet=(o.meetings&&o.meetings.length);
+      var hasText=(o.notes||'').trim()||(o.learned||'').trim();
+      var hasMedia=(o.books&&o.books.length)||(o.films&&o.films.length)||(o.podcasts&&o.podcasts.length);
+      return !(hasMood||hasTasks||hasMeet||hasText||hasMedia);
+    }
+    Object.keys(store).forEach(function(k){
+      if (k.charAt(0)==='_') return;
+      // کلیدِ تاریخِ بدفرمت (بدون پدینگ) و خالی → حذف
+      if (anyDate.test(k) && !stdKey.test(k) && dayEmpty(store[k])) {
+        delete store[k];
+      }
+    });
+    v = 4;
+  }
   store._version = SCHEMA_VERSION;
   persist();
 }
@@ -1504,6 +1600,7 @@ var LIB_SHELF_LABELS = {
 function libShelfLabel(status){ return (LIB_SHELF_LABELS[_libType]||LIB_SHELF_LABELS.books)[status]; }
 var _libType = 'books';
 var _libEditing = null; // {type, id}
+var _libOpenedAt = 0;
 
 function getLibrary(){
   var g = getGlobal();
@@ -1597,21 +1694,65 @@ function onLibCoverPick(ev){
   var reader=new FileReader();
   reader.onload=function(e){
     var img=new Image();
-    img.onload=function(){
-      // فشرده‌سازی: حداکثر عرض ~۴۰۰px، خروجی JPEG کیفیت ۰.۸
-      var maxW=400, scale=Math.min(1, maxW/img.width);
-      var w=Math.round(img.width*scale), h=Math.round(img.height*scale);
-      var cv=document.createElement('canvas'); cv.width=w; cv.height=h;
-      cv.getContext('2d').drawImage(img,0,0,w,h);
-      var data=cv.toDataURL('image/jpeg',0.8);
-      var f=findLibItem(_libEditing.id);
-      if(f){ f.item.cover=data; persist(); renderLibCoverPreview(data); }
-    };
+    img.onload=function(){ openCrop(img); };
     img.src=e.target.result;
   };
   reader.readAsDataURL(file);
   ev.target.value='';
 }
+// ── کراپِ تصویر با نسبت ثابت ۲:۳ ──
+var _crop=null;
+function openCrop(img){
+  var W=240, H=360; // نسبت ۲:۳
+  var minS=Math.max(W/img.naturalWidth, H/img.naturalHeight);
+  _crop={img:img, W:W, H:H, minS:minS, maxS:minS*4, s:minS, ox:0, oy:0};
+  _crop.ox=(W - img.naturalWidth*minS)/2;
+  _crop.oy=(H - img.naturalHeight*minS)/2;
+  var zoom=document.getElementById('cropZoom');
+  zoom.value=1; zoom.oninput=function(){ setCropZoom(parseFloat(zoom.value)); };
+  document.getElementById('cropModal').classList.add('open');
+  attachCropPan();
+  requestAnimationFrame(drawCrop);
+}
+function clampCrop(){
+  var c=_crop; if(!c) return;
+  var iw=c.img.naturalWidth*c.s, ih=c.img.naturalHeight*c.s;
+  c.ox=Math.min(0, Math.max(c.W-iw, c.ox));
+  c.oy=Math.min(0, Math.max(c.H-ih, c.oy));
+}
+function drawCrop(){
+  var c=_crop; if(!c) return;
+  var cv=document.getElementById('cropCanvas'); if(!cv) return;
+  var ctx=cv.getContext('2d');
+  ctx.clearRect(0,0,c.W,c.H);
+  ctx.drawImage(c.img, c.ox, c.oy, c.img.naturalWidth*c.s, c.img.naturalHeight*c.s);
+}
+function setCropZoom(z){
+  var c=_crop; if(!c) return;
+  var newS=c.minS*z, cx=c.W/2, cy=c.H/2, k=newS/c.s;
+  c.ox=cx-(cx-c.ox)*k; c.oy=cy-(cy-c.oy)*k;
+  c.s=newS; clampCrop(); drawCrop();
+}
+function attachCropPan(){
+  var cv=document.getElementById('cropCanvas'); if(!cv || cv._panInit) return; cv._panInit=true;
+  var dragging=false, lx=0, ly=0;
+  cv.addEventListener('pointerdown', function(e){ dragging=true; lx=e.clientX; ly=e.clientY; try{cv.setPointerCapture(e.pointerId);}catch(_){} });
+  cv.addEventListener('pointermove', function(e){ if(!dragging||!_crop) return; e.preventDefault(); _crop.ox+=(e.clientX-lx); _crop.oy+=(e.clientY-ly); lx=e.clientX; ly=e.clientY; clampCrop(); drawCrop(); });
+  cv.addEventListener('pointerup', function(){ dragging=false; });
+  cv.addEventListener('pointercancel', function(){ dragging=false; });
+}
+function applyCrop(){
+  var c=_crop; if(!c) return;
+  var OW=400, OH=600; // خروجی ۲:۳ فشرده
+  var out=document.createElement('canvas'); out.width=OW; out.height=OH;
+  var sx=(0-c.ox)/c.s, sy=(0-c.oy)/c.s, sw=c.W/c.s, sh=c.H/c.s;
+  out.getContext('2d').drawImage(c.img, sx, sy, sw, sh, 0, 0, OW, OH);
+  var data=out.toDataURL('image/jpeg',0.85);
+  var f=findLibItem(_libEditing.id);
+  if(f){ f.item.cover=data; persist(); renderLibCoverPreview(data); }
+  cancelCrop();
+}
+function cancelCrop(){ _crop=null; var m=document.getElementById('cropModal'); if(m)m.classList.remove('open'); }
 function removeLibCover(){
   var f=findLibItem(_libEditing.id); if(!f) return;
   f.item.cover=''; persist(); renderLibCoverPreview('');
@@ -1676,7 +1817,7 @@ function attachLibDrag(el, it){
       }
     } else {
       cleanup();
-      if(!moved){ openLibItem(it.id); }
+      if(!moved){ var openId=it.id; setTimeout(function(){ openLibItem(openId); }, 70); }
     }
   }
   el.addEventListener('pointerup', up);
@@ -1718,6 +1859,7 @@ function findLibItem(id){
 function openLibItem(id){
   var f = findLibItem(id); if(!f) return;
   _libEditing = {type:f.type, id:id};
+  _libOpenedAt = Date.now();
   var it = f.item;
   // مهاجرت: اگر تیکه‌ی تکیِ قدیمی (fav) داشت، به آرایه‌ی quotes منتقل کن
   if (!it.quotes) it.quotes = [];
@@ -1768,17 +1910,17 @@ function addLibQuote(){
   setTimeout(function(){ var tas=document.querySelectorAll('#libQuotes .qrow-ta'); if(tas.length) tas[tas.length-1].focus(); },40);
 }
 var SHARE_TEMPLATES = [
-  {id:'sky',         name:'آسمان',     c1:'#0F1C2E', c2:'#1c3a52', fg:'#F5F1E8', sub:'rgba(245,241,232,0.6)', accent:'#7FCDEE'},
-  {id:'bahar',       name:'بهار',      c1:'#173524', c2:'#2b5a3d', fg:'#F1F6EE', sub:'rgba(241,246,238,0.6)', accent:'#7FD3A0'},
-  {id:'mahsoorati',  name:'ماه صورتی', c1:'#2E1320', c2:'#5d2742', fg:'#FCEFF4', sub:'rgba(252,239,244,0.6)', accent:'#FF9FC4'},
-  {id:'kahkeshan',   name:'کهکشان',    c1:'#1B1433', c2:'#3a2a63', fg:'#F2EEFC', sub:'rgba(242,238,252,0.6)', accent:'#B49CFF'},
-  {id:'aftabgardan', name:'آفتابگردون',c1:'#2E2410', c2:'#5a4820', fg:'#FCF6E8', sub:'rgba(252,246,232,0.6)', accent:'#F0B94D'},
-  {id:'sokoot',      name:'سکوت',      c1:'#2B2F33', c2:'#474d54', fg:'#F1F2F3', sub:'rgba(241,242,243,0.6)', accent:'#C2C8CE'},
-  {id:'nimeshab',    name:'نیمه‌شب',   c1:'#0A1320', c2:'#16273a', fg:'#EAF1F8', sub:'rgba(234,241,248,0.6)', accent:'#7FCDEE'},
-  {id:'berkeh',      name:'برکه',      c1:'#2A444E', c2:'#436b78', fg:'#EEF5F2', sub:'rgba(238,245,242,0.6)', accent:'#9BC4CE'},
-  {id:'paeez',       name:'پاییز',     c1:'#3A271C', c2:'#5d4030', fg:'#F7F0E6', sub:'rgba(247,240,230,0.6)', accent:'#E0B98C'}
+  {id:'sky',         name:'آسمان',     c1:'#3E9BD0', c2:'#1c4a6e', c3:'#0d1f30', fg:'#F5F1E8', sub:'rgba(245,241,232,0.6)', accent:'#7FCDEE'},
+  {id:'bahar',       name:'بهار',      c1:'#3FAE74', c2:'#1f5a3d', c3:'#0e2419', fg:'#F1F6EE', sub:'rgba(241,246,238,0.6)', accent:'#7FD3A0'},
+  {id:'mahsoorati',  name:'ماه صورتی', c1:'#E0699A', c2:'#7a2f53', c3:'#2e1320', fg:'#FCEFF4', sub:'rgba(252,239,244,0.6)', accent:'#FF9FC4'},
+  {id:'kahkeshan',   name:'کهکشان',    c1:'#7E5FD6', c2:'#3f2d6e', c3:'#16102b', fg:'#F2EEFC', sub:'rgba(242,238,252,0.6)', accent:'#B49CFF'},
+  {id:'aftabgardan', name:'آفتابگردون',c1:'#E0A93B', c2:'#7a5a1e', c3:'#2e2410', fg:'#FCF6E8', sub:'rgba(252,246,232,0.6)', accent:'#F0B94D'},
+  {id:'sokoot',      name:'سکوت',      c1:'#8A929B', c2:'#4a5057', c3:'#1f2226', fg:'#F1F2F3', sub:'rgba(241,242,243,0.6)', accent:'#C2C8CE'},
+  {id:'nimeshab',    name:'نیمه‌شب',   c1:'#2E6FA8', c2:'#163a5a', c3:'#070f1a', fg:'#EAF1F8', sub:'rgba(234,241,248,0.6)', accent:'#7FCDEE'},
+  {id:'berkeh',      name:'برکه',      c1:'#4FA9B5', c2:'#2a5a64', c3:'#11262b', fg:'#EEF5F2', sub:'rgba(238,245,242,0.6)', accent:'#9BC4CE'},
+  {id:'paeez',       name:'پاییز',     c1:'#D08A4E', c2:'#7a4d2e', c3:'#2e1d12', fg:'#F7F0E6', sub:'rgba(247,240,230,0.6)', accent:'#E0B98C'}
 ];
-function bgOf(t){ return 'linear-gradient(160deg,'+t.c1+','+t.c2+')'; }
+function bgOf(t){ return 'linear-gradient(155deg,'+t.c1+' 0%,'+t.c2+' 45%,'+t.c3+' 100%)'; }
 function noghteLogoEl(fg, dot){
   var src=document.querySelector('#splashScreen .splash-logo');
   if(!src) return null;
@@ -1963,6 +2105,7 @@ function closeLibItem(){
 }
 function deleteLibItem(){
   if (!_libEditing) return;
+  if (Date.now() - _libOpenedAt < 400) return; // جلوگیری از کلیکِ شبح بلافاصله بعد از باز شدن
   var f = findLibItem(_libEditing.id); if(!f) return;
   var nm = f.item.title || 'این مورد';
   if (!confirm('«'+nm+'» از کتابخانه حذف شود؟')) return;
@@ -2133,6 +2276,176 @@ function updateHabit(hi,field,val){getGlobal().habits[hi][field]=val;save();}
 function addHabit(){getGlobal().habits.push({name:'',weeks:{}});save();renderHabits();}
 function deleteHabit(hi){if(!confirm('عادت حذف بشه؟'))return;getGlobal().habits.splice(hi,1);save();renderHabits();}
 
+var _habitMonthOffset = 0;
+function openHabitMonth(hi){
+  var modal=document.getElementById('habitMonthModal');
+  if(!modal) return;
+  _habitMonthOffset = 0;
+  modal.dataset.hi = hi;
+  renderHabitMonth();
+  modal.classList.add('open');
+}
+function closeHabitMonth(){ document.getElementById('habitMonthModal').classList.remove('open'); }
+function habitMonthNav(dir){ _habitMonthOffset += dir; renderHabitMonth(); }
+// لیستِ همه‌ی روزهای یک ماهِ جلالیِ هدف را با حرکت روز‌به‌روز از امروز پیدا می‌کند (سازگار با toJalali موجود، بدون تبدیل معکوسِ پرخطر)
+function jalaliMonthDays(monthOffset){
+  var d = new Date(today);
+  var cur = toJalali(d.getFullYear(), d.getMonth()+1, d.getDate());
+  var targetIdx = cur[1]-1+monthOffset; // شمارش ماهِ مطلق نسبت به امروز
+  // اول به نقطه‌ای می‌رویم که داخلِ ماهِ هدف باشیم
+  var safety=0;
+  while(true){
+    var j=toJalali(d.getFullYear(), d.getMonth()+1, d.getDate());
+    var diffMonths = (j[0]-cur[0])*12 + (j[1]-cur[1]);
+    if(diffMonths===monthOffset) break;
+    d.setDate(d.getDate() + (diffMonths<monthOffset?5:-5));
+    safety++; if(safety>60) break;
+  }
+  var [jy,jm] = toJalali(d.getFullYear(), d.getMonth()+1, d.getDate());
+  // برو به روزِ اول همین ماهِ جلالی
+  while(toJalali(d.getFullYear(), d.getMonth()+1, d.getDate())[2] !== 1){
+    d.setDate(d.getDate()-1);
+  }
+  var first = new Date(d);
+  var days=[];
+  var cursor = new Date(first);
+  while(true){
+    var jj = toJalali(cursor.getFullYear(), cursor.getMonth()+1, cursor.getDate());
+    if(jj[0]!==jy || jj[1]!==jm) break;
+    days.push(new Date(cursor));
+    cursor.setDate(cursor.getDate()+1);
+  }
+  return {jy:jy, jm:jm, days:days};
+}
+function renderHabitMonth(){
+  var hi = parseInt(document.getElementById('habitMonthModal').dataset.hi, 10);
+  var g = getGlobal(); var h = g.habits[hi]; if(!h) return;
+  var info = jalaliMonthDays(_habitMonthOffset);
+  document.getElementById('habitMonthTitle').textContent = (h.name||'—')+' — '+JALALI_MONTHS[info.jm-1]+' '+info.jy;
+  document.getElementById('habitMonthNext').style.visibility = (_habitMonthOffset>=0)?'hidden':'visible';
+  var grid=document.getElementById('habitMonthGrid'); grid.innerHTML='';
+  var done=0, pastDays=0;
+  info.days.forEach(function(gDate, idx){
+    var key = dateKey(gDate);
+    var isDone = !!(h.days||{})[key];
+    var isFuture = gDate > today;
+    if(isDone) done++;
+    if(!isFuture) pastDays++;
+    var cell=document.createElement('div');
+    cell.className='hm-cell'+(isDone?' done':'')+(isFuture?' future':'')+(key===todayKey()?' today':'');
+    cell.textContent=idx+1;
+    grid.appendChild(cell);
+  });
+  var pct = pastDays? Math.round(done/pastDays*100) : 0;
+  document.getElementById('habitMonthSummary').textContent = done+' روز از '+pastDays+' روزِ گذشته‌ی این ماه ('+pct+'٪)';
+}
+// ── موتور تحلیل «نگاه کلی» ──
+var INSIGHT_MIN_DAYS = 8;       // آستانه‌ی معناداری: حداقل روزِ داده‌ی هم‌زمان
+var INSIGHT_MIN_GAP = 1.0;      // حداقل اختلاف میانگین حس‌وحال (از ۱۲) برای گزارش رابطه
+// نگاشتِ ایموجی‌های قدیمی که از لیست فعلی حذف شده‌اند، به نزدیک‌ترین معادل
+var MOOD_LEGACY = {'😴':'🥱','☺️':'😊','😵\u200d💫':'🫠'};
+function moodScoreOf(emoji){
+  if(!emoji) return null;
+  var s=getSettings(); var arr=(s.moods&&s.moods.length)?s.moods:DEFAULT_MOODS;
+  var e = (arr.indexOf(emoji)>=0) ? emoji : (MOOD_LEGACY[emoji]||null);
+  var idx = e!==null ? arr.indexOf(e) : -1;
+  if(idx<0) return null;                       // ایموجیِ ناشناخته → بی‌امتیاز (در تحلیل نادیده)
+  if(arr.length<2) return MOOD_MAX/2;
+  return 1 + (idx/(arr.length-1))*(MOOD_MAX-1); // امتیازِ ۱..۱۲ بر اساسِ ترتیبِ خودِ کاربر
+}
+// آیا این روز «رشد» داشته؟ (یادگیری یا مطالعه‌ی فعال)
+function dayHadGrowth(key){
+  var d=store[key]; if(!d) return false;
+  if((d.learned||'').trim()) return true;
+  return false;
+}
+// درصد انجام کارهای یک روز (۰..۱) یا null اگر کاری نبود
+function dayTaskRatio(key){
+  var d=store[key]; if(!d) return null;
+  var all=(d.freeTasks||[]).concat(d.timedTasks||[]);
+  if(!all.length) return null;
+  var done=all.filter(function(t){return t.done && t.doneAt!=='منتقل';}).length;
+  return done/all.length;
+}
+// درصد پایبندی به عادت‌های یک روز (۰..۱) یا null اگر عادتی نبود
+function dayHabitRatio(key){
+  var g=getGlobal(); if(!g.habits||!g.habits.length) return null;
+  var total=g.habits.length, done=0;
+  g.habits.forEach(function(h){ if((h.days||{})[key]) done++; });
+  return total?done/total:null;
+}
+// جمع‌آوری داده‌ی N روز اخیر: {key, mood, taskRatio, growth, habitRatio, dow}
+function gatherDays(n){
+  var out=[];
+  for(var i=0;i<n;i++){
+    var d=new Date(today); d.setDate(d.getDate()-i);
+    var key=dateKey(d);
+    var rec=store[key];
+    out.push({
+      key:key,
+      mood: rec? moodScoreOf(rec.mood) : null,
+      taskRatio: dayTaskRatio(key),
+      growth: dayHadGrowth(key),
+      habitRatio: dayHabitRatio(key),
+      dow: d.getDay()
+    });
+  }
+  return out;
+}
+// مقایسه‌ی میانگین حس‌وحال بین دو گروه روز؛ خروجی متن یا null اگر معنادار نبود
+function moodRelationInsight(days, predicate, labelHigh, labelLow){
+  var withMood=days.filter(function(x){return x.mood!==null;});
+  var groupA=withMood.filter(predicate);        // شرط برقرار
+  var groupB=withMood.filter(function(x){return !predicate(x);});
+  if(groupA.length<INSIGHT_MIN_DAYS/2 || groupB.length<INSIGHT_MIN_DAYS/2) return null;
+  if(groupA.length+groupB.length < INSIGHT_MIN_DAYS) return null;
+  var avg=function(arr){return arr.reduce(function(s,x){return s+x.mood;},0)/arr.length;};
+  var a=avg(groupA), b=avg(groupB);
+  var gap=a-b;
+  if(Math.abs(gap)<INSIGHT_MIN_GAP) return null; // تفاوت محسوس نیست → چیزی ننویس
+  return gap>0 ? labelHigh : labelLow;
+}
+// مقایسه بر اساس میانه‌ی خودِ کاربر. فقط رابطه‌ی مثبت و دلگرم‌کننده گزارش می‌شود؛
+// نبودِ رابطه یا رابطه‌ی منفی → چیزی نمی‌نویسد (هم‌راستا با هویتِ نقطه: بدون سرزنش).
+function moodRelationByMedian(days, valueOf, labelPositive){
+  var rows=days.filter(function(x){return x.mood!==null && valueOf(x)!==null;});
+  if(rows.length < INSIGHT_MIN_DAYS) return null;
+  var vals=rows.map(valueOf).slice().sort(function(a,b){return a-b;});
+  var median=vals[Math.floor(vals.length/2)];
+  var high=rows.filter(function(x){return valueOf(x) > median;});
+  var low =rows.filter(function(x){return valueOf(x) <= median;});
+  if(high.length < 3 || low.length < 3) return null;
+  var avg=function(a){return a.reduce(function(s,x){return s+x.mood;},0)/a.length;};
+  var gap=avg(high)-avg(low);
+  // فقط وقتی رابطه‌ی مثبتِ معنادار هست گزارش بده؛ در غیر این صورت سکوت
+  if(gap < INSIGHT_MIN_GAP) return null;
+  return labelPositive;
+}
+function renderInsights(){
+  var el=document.getElementById('insightsBody'); if(!el) return;
+  var days=gatherDays(30);
+  var cards=[];
+  // حس‌وحال × کارها — فقط رابطه‌ی مثبت و دلگرم‌کننده
+  var taskIns=moodRelationByMedian(days,
+    function(x){return x.taskRatio;},
+    'روزهایی که قدمی برای کارهایت برمی‌داری، انگار حالت هم کمی بهتر است. 🌱'
+  );
+  if(taskIns) cards.push({icon:'🌱', title:'حس‌وحال و کارها', text:taskIns});
+  // حس‌وحال × عادت‌ها
+  var habitIns=moodRelationByMedian(days,
+    function(x){return x.habitRatio;},
+    'روزهایی که به عادت‌هایت پایبندی، با حالِ بهترت همراه بوده‌اند. ✨'
+  );
+  if(habitIns) cards.push({icon:'✨', title:'حس‌وحال و عادت‌ها', text:habitIns});
+
+  if(!cards.length){
+    el.innerHTML='<div class="insight-empty">هنوز دارم روزهایت را می‌خوانم. هرچه بیشتر همراهم باشی، الگوهای قشنگ‌ترِ زندگی‌ات را برایت پیدا می‌کنم.</div>';
+  } else {
+    el.innerHTML=cards.map(function(c){
+      return '<div class="insight-item"><div class="insight-icon">'+c.icon+'</div><div class="insight-text"><div class="insight-title">'+c.title+'</div><div class="insight-body">'+c.text+'</div></div></div>';
+    }).join('');
+  }
+}
 function renderHabitStats(){
   const g=getGlobal();const el=document.getElementById('habitStats');if(!el)return;
   if(!g.habits.length){el.style.display='none';return;}
@@ -2157,7 +2470,7 @@ function renderHabitStats(){
   const circ=2*Math.PI*30;const offset=circ-(pct/100*circ);
   const col=pct>=70?'#33E08A':pct>=40?'#d4a840':'#e07070';
   let barsHtml='<div class="section-micro-title" style="margin-top:0.5rem">'+JALALI_MONTHS[jm-1]+' '+jy+'</div>';
-  g.habits.forEach(function(h){
+  g.habits.forEach(function(h, hi){
     if(!h.days)return;
     // Last 28 days
     let t=0,d=0;
@@ -2166,26 +2479,38 @@ function renderHabitStats(){
       t++;if(h.days[dateKey(dd)])d++;
     }
     const hp=t?Math.round(d/t*100):0;
-    barsHtml+='<div class="habit-bar-row"><div class="habit-bar-name">'+(h.name||'—')+'</div><div class="habit-bar"><div class="habit-bar-fill" style="width:'+hp+'%"></div></div><div class="habit-bar-pct">'+hp+'%</div></div>';
+    barsHtml+='<div class="habit-bar-row" data-hi="'+hi+'" style="cursor:pointer"><div class="habit-bar-name">'+(h.name||'—')+'</div><div class="habit-bar"><div class="habit-bar-fill" style="width:'+hp+'%"></div></div><div class="habit-bar-pct">'+hp+'%</div></div>';
   });
   el.innerHTML='<div class="habit-circle-section"><svg class="habit-circle-svg" viewBox="0 0 80 80"><circle cx="40" cy="40" r="30" fill="none" stroke="var(--surface3)" stroke-width="6"/><circle cx="40" cy="40" r="30" fill="none" stroke="'+col+'" stroke-width="6" stroke-linecap="round" stroke-dasharray="'+circ+'" stroke-dashoffset="'+offset+'" transform="rotate(-90 40 40)"/><text x="40" y="36" text-anchor="middle" font-size="14" font-weight="800" fill="'+col+'" font-family="Vazirmatn,sans-serif">'+pct+'%</text><text x="40" y="50" text-anchor="middle" font-size="7" fill="var(--text3)" font-family="Vazirmatn,sans-serif">ماه جاری</text></svg><div style="flex:1"><div style="font-size:1.5rem;font-weight:800;color:'+col+'">'+pct+'%</div><div style="font-size:0.68rem;color:var(--text3);margin-top:0.1rem">تحقق عادت‌ها</div><div style="font-size:0.72rem;color:var(--text2);margin-top:0.25rem">'+doneAll+' از '+totalAll+' فرصت</div></div></div>'+barsHtml;
+  // اتصال مستقیم رویداد به هر نوار (مطمئن‌تر از onclick رشته‌ای)
+  el.querySelectorAll('.habit-bar-row').forEach(function(row){
+    row.addEventListener('click', function(){
+      openHabitMonth(parseInt(row.dataset.hi, 10));
+    });
+  });
 }
 
 // ── Mood Chart (Wave) ──
+var _moodRange = 'week';
+function setMoodRange(r){
+  _moodRange = r;
+  document.querySelectorAll('#moodRangeSeg .seg-mini-btn').forEach(function(b,i){
+    b.classList.toggle('active', (r==='week'&&i===0)||(r==='month'&&i===1));
+  });
+  var t=document.getElementById('moodChartTitle');
+  if(t) t.textContent = r==='month' ? 'حس و حال ماه' : 'حس و حال هفته';
+  renderMoodChart();
+}
 function renderMoodChart(){
   const wrap=document.getElementById('moodChart');if(!wrap)return;
-  const days=[];for(let i=6;i>=0;i--){const d=new Date(today);d.setDate(d.getDate()-i);days.push(d);}
-  const W=300,H=75,pX=20,pY=10;
+  const isMonth = _moodRange==='month';
+  const n = isMonth ? 30 : 7;
+  const days=[];for(let i=n-1;i>=0;i--){const d=new Date(today);d.setDate(d.getDate()-i);days.push(d);}
+  const W=300,H=75,pX=isMonth?8:20,pY=10;
   // Get current mood list for scoring unknown emojis
   const s=getSettings();
   const allMoods=s.moods.length?s.moods:DEFAULT_MOODS;
-  const getMoodScore=function(emoji){
-    if(!emoji)return null;
-    if(MOOD_SCORE[emoji])return MOOD_SCORE[emoji];
-    // For custom emojis, use position in list as score
-    const idx=allMoods.indexOf(emoji);
-    return idx>=0?Math.round(1+(idx/(allMoods.length-1))*(MOOD_MAX-1)):Math.round(MOOD_MAX/2);
-  };
+  const getMoodScore=function(emoji){ return moodScoreOf(emoji); };
   const getMoodColor=function(emoji){
     if(!emoji)return'#33E08A';
     if(MOOD_COLOR[emoji])return MOOD_COLOR[emoji];
@@ -2224,9 +2549,15 @@ function renderMoodChart(){
   pts.forEach(function(p){
     if(p.y===null)return;
     const col=MOOD_COLOR[p.mood]||'#33E08A';
-    svg+='<circle cx="'+p.x+'" cy="'+p.y+'" r="4" fill="'+col+'" stroke="var(--surface)" stroke-width="1.5"/>';
-    svg+='<text x="'+p.x+'" y="'+(p.y-8)+'" text-anchor="middle" font-size="10">'+p.mood+'</text>';
-    svg+='<text x="'+p.x+'" y="'+(H+12)+'" text-anchor="middle" font-size="9" fill="'+(p.isToday?'#33E08A':'var(--text3)')+'" font-weight="'+(p.isToday?700:400)+'">'+p.jDay+'</text>';
+    const r = isMonth ? 2.4 : 4;
+    svg+='<circle cx="'+p.x+'" cy="'+p.y+'" r="'+r+'" fill="'+col+'" stroke="var(--surface)" stroke-width="1.2"/>';
+    if(!isMonth){
+      svg+='<text x="'+p.x+'" y="'+(p.y-8)+'" text-anchor="middle" font-size="10">'+p.mood+'</text>';
+    }
+    // در حالت ماه فقط برخی روزها برچسب می‌گیرند تا شلوغ نشود
+    if(!isMonth || p.jDay%5===0 || p.isToday){
+      svg+='<text x="'+p.x+'" y="'+(H+12)+'" text-anchor="middle" font-size="9" fill="'+(p.isToday?'#33E08A':'var(--text3)')+'" font-weight="'+(p.isToday?700:400)+'">'+p.jDay+'</text>';
+    }
   });
   svg+='</svg>';
   wrap.innerHTML=svg;
@@ -3115,7 +3446,7 @@ function switchTab(name) {
   });
   if(name==='Rooz') { updateHero(); renderDay(); }
   if(name==='Khelaghat') { renderHub(); }
-  if(name==='Negah') { renderStreak(); renderProdChart(); renderHabitStats(); }
+  if(name==='Negah') { renderHabitStats(); renderStreak(); renderInsights(); }
 }
 
 function goToToday() {
@@ -3270,7 +3601,7 @@ function renderWeeklyPreview() {
   var total=0, done=0, days=0;
   for(var i=0;i<7;i++) {
     var d = new Date(today); d.setDate(d.getDate()-i);
-    var key = d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
+    var key = dateKey(d);
     var data = getDayData(key);
     var all = (data.freeTasks||[]).concat(data.timedTasks||[]);
     if(all.length>0) days++;
@@ -3290,7 +3621,7 @@ function renderMonthlyPreview() {
   var total=0, done=0;
   for(var i=0;i<30;i++) {
     var d = new Date(today); d.setDate(d.getDate()-i);
-    var key = d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
+    var key = dateKey(d);
     var data = getDayData(key);
     var all = (data.freeTasks||[]).concat(data.timedTasks||[]);
     total += all.length;
