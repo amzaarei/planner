@@ -78,7 +78,19 @@
 .color-custom-input::-webkit-color-swatch{border:none;border-radius:50%;}
 .color-picker-row{display:flex;align-items:center;gap:0.4rem;flex-wrap:wrap;margin-top:0.5rem;}
 
-* {margin:0;padding:0;box-sizing:border-box} html,body {font-family:'Vazirmatn',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden} .topbar {background:var(--header-bg);border-bottom:1px solid rgba(255,255,255,0.10);padding:0.75rem 1rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;gap:0.5rem} .app-title {font-size:0.9rem;font-weight:800;background:linear-gradient(90deg,#33E08A,#1DBF73);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;white-space:nowrap} .topbar-btns {display:flex;gap:0.35rem;flex-shrink:0} .topbar-btn {display:flex;align-items:center;gap:0.25rem;background:var(--header-btn);border:1px solid var(--header-btn-border);color:var(--header-btn-text);border-radius:8px;padding:0.3rem 0.6rem;font-size:0.72rem;cursor:pointer;font-family:'Vazirmatn',sans-serif;transition:all 0.15s;white-space:nowrap} .topbar-btn:hover {border-color:var(--header-hover);color:var(--header-hover);background:rgba(255,255,255,0.06)} .topbar-btn svg {width:0.8rem;height:0.8rem;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0} .cal-strip {background:var(--surface);border-bottom:1px solid var(--border);padding:0.6rem 1rem;display:flex;align-items:center;gap:0.4rem;overflow-x:auto;scrollbar-width:none} .cal-strip::-webkit-scrollbar {display:none} .cal-nav {background:none;border:1px solid var(--border2);color:var(--text2);width:1.8rem;height:1.8rem;border-radius:50%;cursor:pointer;font-size:0.85rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.15s} .cal-nav:hover {border-color:var(--accent);color:var(--accent)} .cal-days {display:flex;gap:0.35rem;flex:1;justify-content:center} .cal-day {display:flex;flex-direction:column;align-items:center;gap:0.15rem;padding:0.35rem 0.5rem;border-radius:var(--r2);cursor:pointer;border:1.5px solid transparent;transition:all 0.15s;min-width:2.4rem;flex-shrink:0} .cal-day:hover {background:var(--surface2);border-color:var(--border)} .cal-day.active {border-color:var(--accent);background:var(--accent-glow);box-shadow:0 0 12px var(--accent-glow)} .cal-day-name {font-size:0.6rem;color:var(--text3);font-weight:600} .cal-day-num {font-size:0.95rem;font-weight:700;color:var(--text2)} .cal-day.active .cal-day-num {color:var(--accent2);font-weight:800} .cal-day.today .cal-day-num {color:var(--on-accent);background:var(--accent);border-radius:50%;width:1.6rem;height:1.6rem;display:flex;align-items:center;justify-content:center;margin:0 auto;font-weight:800} .cal-day-dot {width:4px;height:4px;border-radius:50%} .cal-day.has-tasks .cal-day-dot {background:var(--accent)} .main {display:flex;flex-direction:column;padding:1rem;gap:0.85rem;max-width:800px;margin:0 auto} @media (min-width:700px) {.main {display:grid;grid-template-columns:1fr 300px;align-items:start;padding:1.25rem;gap:1rem} .col-right {display:flex;flex-direction:column;gap:0.85rem} } .col-left {display:flex;flex-direction:column;gap:0.85rem} .day-header {padding:0.25rem 0 0.5rem} .day-title {font-size:1.5rem;font-weight:800;color:var(--text);line-height:1} .day-sub {font-size:0.8rem;color:var(--text3);margin-top:0.2rem} .mood-card {background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:0.75rem 1rem;display:flex;align-items:flex-start;gap:0.75rem} .mood-label {font-size:0.72rem;color:var(--text3);font-weight:700;flex-shrink:0;padding-top:0.3rem;letter-spacing:0.04em} .mood-emojis {display:flex;gap:0.3rem;flex-wrap:wrap;flex:1} .mood-btn {width:2.1rem;height:2.1rem;border-radius:50%;border:1.5px solid transparent;background:var(--surface2);cursor:pointer;font-size:1rem;transition:all 0.2s;display:flex;align-items:center;justify-content:center;opacity:0.55} .mood-btn:hover {transform:scale(1.12);opacity:1;border-color:var(--border2)} .mood-btn.selected {border-color:var(--accent);background:var(--accent-glow);transform:scale(1.2);opacity:1;box-shadow:0 0 14px var(--accent-glow)} .mood-emojis.none-selected .mood-btn {opacity:1} .card {background:linear-gradient(150deg,var(--card-grad-1),var(--card-grad-2));border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);transition:border-color 0.2s,box-shadow 0.2s,transform 0.2s} .card:hover {border-color:var(--border2)}
+* {margin:0;padding:0;box-sizing:border-box} html,body {font-family:'Vazirmatn',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden} .topbar {background:var(--header-bg);border-bottom:1px solid rgba(255,255,255,0.10);padding:0.75rem 1rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;gap:0.5rem} .app-title {font-size:0.9rem;font-weight:800;background:linear-gradient(90deg,#33E08A,#1DBF73);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;white-space:nowrap} .topbar-btns {display:flex;gap:0.35rem;flex-shrink:0} .topbar-btn {display:flex;align-items:center;gap:0.25rem;background:var(--header-btn);border:1px solid var(--header-btn-border);color:var(--header-btn-text);border-radius:8px;padding:0.3rem 0.6rem;font-size:0.72rem;cursor:pointer;font-family:'Vazirmatn',sans-serif;transition:all 0.15s;white-space:nowrap} .topbar-btn:hover {border-color:var(--header-hover);color:var(--header-hover);background:rgba(255,255,255,0.06)} .topbar-btn svg {width:0.8rem;height:0.8rem;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0} .cal-strip {background:var(--surface);border-bottom:1px solid var(--border);padding:0.6rem 1rem;display:flex;align-items:center;gap:0.4rem;overflow-x:auto;scrollbar-width:none} .cal-strip::-webkit-scrollbar {display:none} .cal-nav {background:none;border:1px solid var(--border2);color:var(--text2);width:1.8rem;height:1.8rem;border-radius:50%;cursor:pointer;font-size:0.85rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.15s} .cal-nav:hover {border-color:var(--accent);color:var(--accent)} .cal-days {display:flex;gap:0.35rem;flex:1;justify-content:center} .cal-day {display:flex;flex-direction:column;align-items:center;gap:0.15rem;padding:0.35rem 0.5rem;border-radius:var(--r2);cursor:pointer;border:1.5px solid transparent;transition:all 0.15s;min-width:2.4rem;flex-shrink:0} .cal-day:hover {background:var(--surface2);border-color:var(--border)} .cal-day.active {border-color:var(--accent);background:var(--accent-glow);box-shadow:0 0 12px var(--accent-glow)} .cal-day-name {font-size:0.6rem;color:var(--text3);font-weight:600} .cal-day-num {font-size:0.95rem;font-weight:700;color:var(--text2)} .cal-day.active .cal-day-num {color:var(--accent2);font-weight:800} .cal-day.today .cal-day-num {color:var(--on-accent);background:var(--accent);border-radius:50%;width:1.6rem;height:1.6rem;display:flex;align-items:center;justify-content:center;margin:0 auto;font-weight:800} .cal-day-dot {width:4px;height:4px;border-radius:50%} .cal-day.has-tasks .cal-day-dot {background:var(--accent)} .main {display:flex;flex-direction:column;padding:1rem;gap:0.85rem;max-width:800px;margin:0 auto} @media (min-width:700px) {.main {display:grid;grid-template-columns:1fr 300px;align-items:start;padding:1.25rem;gap:1rem} .col-right {display:flex;flex-direction:column;gap:0.85rem} } .col-left {display:flex;flex-direction:column;gap:0.85rem} .day-header {padding:0.25rem 0 0.5rem} .day-title {font-size:1.5rem;font-weight:800;color:var(--text);line-height:1} .day-sub {font-size:0.8rem;color:var(--text3);margin-top:0.2rem} .mood-card {background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:0.9rem 1rem;display:flex;flex-direction:column;gap:0.5rem} .mood-label {font-size:0.72rem;color:var(--text3);font-weight:700;letter-spacing:0.04em}
+.mood-slider-wrap{display:flex;flex-direction:column;align-items:center;gap:0.5rem;padding:0.2rem 0}
+.mood-big{font-size:2.3rem;line-height:1;height:2.6rem;display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.25));transition:transform 0.12s}
+.mood-big.empty{font-size:1.7rem;opacity:0.4}
+.mood-slider-track{position:relative;width:100%;height:2.4rem;display:flex;align-items:center}
+.mood-slider-fill{position:absolute;left:0;right:0;height:0.65rem;border-radius:1rem;background:linear-gradient(90deg,#e0574e,#e0a93b,#5bb56a)}
+.mood-slider-fill.empty{background:var(--surface3);opacity:0.6}
+.mood-slider-input{position:relative;width:100%;height:2.4rem;margin:0;background:transparent;-webkit-appearance:none;appearance:none;cursor:pointer}
+.mood-slider-input::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:1.7rem;height:1.7rem;border-radius:50%;background:#fff;border:3px solid var(--accent);box-shadow:0 2px 8px rgba(0,0,0,0.3);cursor:pointer}
+.mood-slider-input::-moz-range-thumb{width:1.7rem;height:1.7rem;border-radius:50%;background:#fff;border:3px solid var(--accent);box-shadow:0 2px 8px rgba(0,0,0,0.3);cursor:pointer}
+.mood-ticks{display:flex;justify-content:space-between;width:100%;padding:0 0.2rem;margin-top:-0.2rem}
+.mood-tick{font-size:0.85rem;opacity:0.3;transition:opacity 0.15s,transform 0.15s}
+.mood-tick.active{opacity:1;transform:scale(1.25)} .card {background:linear-gradient(150deg,var(--card-grad-1),var(--card-grad-2));border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);transition:border-color 0.2s,box-shadow 0.2s,transform 0.2s} .card:hover {border-color:var(--border2)}
 @media (hover:hover){.card:hover{transform:translateY(-3px);box-shadow:0 12px 34px rgba(28,52,96,0.09)}} .card-head {display:flex;align-items:center;justify-content:space-between;padding:0.65rem 0.85rem;border-bottom:1px solid var(--border);background:var(--accent-soft)} .card-head-left {display:flex;align-items:center;gap:0.5rem} .card-icon-svg {width:1rem;height:1rem;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0} .card-title {font-size:0.75rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase} .card-body {padding:0.5rem} .card-actions {display:flex;align-items:center;gap:0.3rem} .plus-btn {background:none;border:none;color:var(--accent);cursor:pointer;font-size:1.2rem;line-height:1;padding:0.1rem 0.25rem;border-radius:6px;transition:all 0.15s} .plus-btn:hover {background:var(--accent-glow)} .ring-wrap {display:flex;align-items:center;gap:0.3rem} .ring-svg {width:32px;height:32px;transform:rotate(-90deg)} .ring-bg {fill:none;stroke:var(--surface3);stroke-width:3} .ring-fill {fill:none;stroke:var(--accent);stroke-width:3;stroke-linecap:round;transition:stroke-dashoffset 0.4s ease} .ring-label {font-size:0.68rem;color:var(--text3)} .task-list {display:flex;flex-direction:column} .task-item {display:flex;align-items:flex-start;gap:0.5rem;padding:0.5rem 0.5rem;border-radius:var(--r2);border:1px solid transparent;transition:all 0.15s;cursor:default} .task-item:hover {background:var(--surface2);border-color:var(--border)} .task-item.done {opacity:0.45} .cb {width:1.1rem;height:1.1rem;border-radius:4px;border:1.5px solid var(--border2);flex-shrink:0;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.65rem;color:var(--on-accent);transition:all 0.15s;background:transparent;margin-top:0.18rem} .task-item.done .cb {background:var(--accent);border-color:var(--accent);box-shadow:0 0 8px var(--accent-glow)} .star-btn {background:none;border:none;font-size:1rem;cursor:pointer;color:var(--text3);flex-shrink:0;padding:0.15rem;border-radius:50%;min-width:1.8rem;min-height:1.8rem;display:flex;align-items:center;justify-content:center;transition:all 0.15s} .star-btn.starred {color:var(--gold);box-shadow:0 0 8px rgba(212,168,64,0.3)} .star-btn:hover {color:var(--gold);background:rgba(212,168,64,0.1)} .task-text {flex:1;font-size:0.85rem;color:var(--text);outline:none;background:transparent;border:none;font-family:'Vazirmatn',sans-serif;cursor:text;min-width:0;line-height:1.55;word-break:break-word;padding-top:0.12rem} .task-item.done .task-text {text-decoration:line-through;color:var(--text3)} .task-time-input {font-size:0.75rem;color:var(--accent2);background:var(--surface3);border:1px solid var(--border2);border-radius:6px;padding:0.2rem 0.35rem;outline:none;font-family:'Vazirmatn',sans-serif;width:5.5rem;text-align:center;cursor:pointer;color-scheme:light} .task-time-input:placeholder-shown, .task-time-input[value=""] {border-color:var(--gold) !important;} .done-time {font-size:0.65rem;color:var(--accent);flex-shrink:0;white-space:nowrap} .del-btn {background:none;border:none;color:var(--text3);cursor:pointer;font-size:0.8rem;padding:0.15rem 0.25rem;opacity:0.3;border-radius:4px;transition:all 0.15s;min-width:1.5rem;min-height:1.5rem;display:flex;align-items:center;justify-content:center} .task-item:hover .del-btn {opacity:0.7} .del-btn:hover {color:var(--red);opacity:1;background:var(--red-soft)} .add-row {display:flex;align-items:center;gap:0.4rem;padding:0.4rem 0.5rem;color:var(--text3);font-size:0.8rem;cursor:pointer;border-radius:var(--r2);transition:all 0.15s;font-family:'Vazirmatn',sans-serif;background:none;border:none;width:100%;text-align:right} .add-row:hover {color:var(--accent2);background:var(--accent-glow)} .session-note {background:var(--surface3);border-radius:6px;padding:0.35rem 0.6rem;font-size:0.78rem;color:var(--text2);outline:none;border:1px solid transparent;width:100%;font-family:'Vazirmatn',sans-serif;resize:none;min-height:2rem;transition:border-color 0.15s;margin:0.1rem 0 0.1rem 2rem} .session-note:focus {border-color:var(--accent)} .transfer-banner {background:var(--accent-glow);border:1px solid var(--accent-glow);border-radius:var(--r2);padding:0.5rem 0.75rem;display:none;align-items:center;justify-content:space-between;font-size:0.78rem;color:var(--accent2)} .transfer-banner.show {display:flex} .transfer-btn {background:linear-gradient(90deg,var(--accent),var(--accent2));color:var(--on-accent);border:none;border-radius:6px;padding:0.25rem 0.65rem;font-size:0.72rem;font-weight:700;cursor:pointer;font-family:'Vazirmatn',sans-serif} .media-section {padding:0.5rem 0.75rem;border-bottom:1px solid var(--border)} .media-section:last-child {border-bottom:none} .media-section-label {display:flex;align-items:center;gap:0.4rem;margin-bottom:0.35rem} .media-section-label svg {width:0.85rem;height:0.85rem;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round} .media-section-label span {font-size:0.7rem;font-weight:600;letter-spacing:0.03em} .media-item {display:flex;align-items:center;gap:0.4rem;padding:0.3rem 0} .media-name {flex:1;font-size:0.82rem;color:var(--text);outline:none;background:transparent;border:none;font-family:'Vazirmatn',sans-serif} .star-rating {display:flex;gap:0.05rem} .star-rating span {font-size:0.9rem;cursor:pointer;color:var(--border2);transition:color 0.1s} .star-rating span.filled {color:var(--gold)} .course-item {padding:0.6rem 0.5rem;border-radius:var(--r2);margin-bottom:0.4rem;background:var(--surface2);border:1px solid var(--border)} .course-name {font-size:0.85rem;color:var(--text);outline:none;background:transparent;border:none;font-family:'Vazirmatn',sans-serif;width:100%;margin-bottom:0.35rem} .course-controls {display:flex;align-items:center;gap:0.4rem;flex-wrap:wrap;margin-bottom:0.35rem} .course-num {font-size:0.72rem;color:var(--text3);background:var(--surface3);border:1px solid var(--border);border-radius:5px;padding:0.15rem 0.35rem;width:3rem;text-align:center;outline:none;font-family:'Vazirmatn',sans-serif} .course-inc-btn {font-size:0.72rem;background:var(--blue-soft);border:1px solid var(--blue);color:var(--blue);border-radius:6px;padding:0.15rem 0.5rem;cursor:pointer;font-family:'Vazirmatn',sans-serif} .progress-bar-wrap {display:flex;align-items:center;gap:0.5rem} .progress-bar {flex:1;height:4px;background:var(--surface3);border-radius:2px;overflow:hidden} .progress-bar-fill {height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:2px;transition:width 0.4s ease} .progress-pct {font-size:0.68rem;color:var(--accent2);font-weight:700;min-width:2.5rem} .habit-row {display:flex;align-items:center;gap:0.5rem;padding:0.45rem 0.5rem;border-radius:var(--r2)} .habit-row:hover {background:var(--surface2)} .habit-name {flex:0 0 5rem;width:5rem;font-size:0.8rem;color:var(--text);outline:none;background:transparent;border:none;font-family:'Vazirmatn',sans-serif;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;padding:0} .habit-dots {display:flex;gap:0.18rem;flex:1;justify-content:flex-end;align-items:center;flex-wrap:nowrap;overflow:hidden} .hdot {width:1.5rem;height:1.5rem;border-radius:50%;border:1.5px solid var(--border2);background:var(--surface3);cursor:pointer;font-size:0.58rem;font-weight:700;display:flex;align-items:center;justify-content:center;color:var(--text3);transition:all 0.15s;font-family:'Vazirmatn',sans-serif} .hdot.done {background:var(--accent);border-color:var(--accent);color:var(--on-accent);box-shadow:0 0 8px var(--accent-glow)} .habit-circle-section {padding:0.5rem;background:var(--surface2);border-radius:var(--r2);border:1px solid var(--border);margin-top:0.5rem;display:flex;align-items:center;gap:0.75rem} .habit-circle-svg {width:75px;height:75px;flex-shrink:0} .habit-bar-row {display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem} .habit-bar-name {font-size:0.75rem;color:var(--text2);min-width:5rem;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis} .habit-bar {flex:1;height:4px;background:var(--surface3);border-radius:2px;overflow:hidden} .habit-bar-fill {height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:2px;transition:width 0.4s} .habit-bar-pct {font-size:0.68rem;color:var(--accent2);font-weight:700;min-width:2.2rem} .wave-wrap {padding:0.5rem} .wave-svg {width:100%;overflow:visible} .notes-ta {width:100%;background:transparent;border:none;color:var(--text);font-family:'Vazirmatn',sans-serif;font-size:0.85rem;outline:none;resize:none;min-height:80px;line-height:1.8;padding:0.5rem;caret-color:var(--accent)} .notes-ta::placeholder {color:var(--text3)} .learned-ta {width:100%;background:transparent;border:none;color:var(--text);font-family:'Vazirmatn',sans-serif;font-size:0.83rem;outline:none;resize:none;min-height:60px;line-height:1.7;padding:0.5rem;caret-color:var(--accent)} .learned-ta::placeholder {color:var(--text3)} .idea-tags {display:flex;flex-wrap:wrap;gap:0.3rem;padding:0.5rem 0.5rem 0} .tag-chip {font-size:0.65rem;padding:0.15rem 0.45rem;border-radius:20px;border:1px solid var(--border2);color:var(--text3);cursor:pointer;transition:all 0.15s;background:none;font-family:'Vazirmatn',sans-serif} .tag-chip:hover,.tag-chip.active {border-color:var(--accent);color:var(--accent2);background:var(--accent-glow)} .idea-item {background:var(--surface2);border:1px solid var(--border);border-radius:var(--r2);padding:0.6rem 0.75rem;margin-bottom:0.4rem;position:relative;transition:border-color 0.2s} .idea-item:hover {border-color:var(--border2)} .idea-tag-label {font-size:0.62rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:var(--accent2);margin-bottom:0.25rem} .idea-status-btn {font-size:0.62rem;font-weight:700;padding:0.1rem 0.4rem;border-radius:20px;cursor:pointer;border:none;font-family:'Vazirmatn',sans-serif} .idea-text {font-size:0.83rem;color:var(--text);outline:none;background:transparent;border:none;font-family:'Vazirmatn',sans-serif;width:100%;resize:none;min-height:2rem;line-height:1.6} .idea-expand {font-size:0.75rem;color:var(--text3);outline:none;background:transparent;border:none;border-top:1px solid var(--border);padding-top:0.3rem;margin-top:0.3rem;font-family:'Vazirmatn',sans-serif;width:100%;resize:none;min-height:1.5rem;line-height:1.6} .idea-del {position:absolute;top:0.4rem;left:0.5rem;background:none;border:none;color:var(--text3);cursor:pointer;font-size:0.75rem;opacity:0;transition:opacity 0.15s} .idea-item:hover .idea-del {opacity:1} .img-btn {font-size:0.7rem;color:var(--text3);cursor:pointer;background:var(--surface3);border:1px dashed var(--border2);border-radius:6px;padding:0.2rem 0.5rem;margin-top:0.3rem;font-family:'Vazirmatn',sans-serif;transition:all 0.15s} .img-btn:hover {border-color:var(--accent);color:var(--accent2)} .idea-img {width:100%;max-height:140px;object-fit:cover;border-radius:6px;margin-top:0.4rem;cursor:pointer} .section-micro-title {font-size:0.65rem;color:var(--text3);font-weight:700;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:0.4rem} .overlay {position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:200;display:none;align-items:center;justify-content:center;padding:1rem;overflow-y:auto} .overlay.open {display:flex}
 #changelogModal{z-index:100050}
 #moodEditorModal{z-index:100050}
@@ -283,6 +295,25 @@ body{padding-bottom:4.8rem !important}
 .insight-title{font-size:0.74rem;font-weight:800;color:var(--accent2);margin-bottom:0.2rem}
 .insight-body{font-size:0.82rem;color:var(--text);line-height:1.7}
 .insight-empty{font-size:0.8rem;color:var(--text3);text-align:center;padding:1rem 0.75rem;line-height:1.8}
+.rec-card{border-radius:13px;padding:0.9rem 1rem;margin-bottom:0.7rem;position:relative;overflow:hidden}
+.rec-label{font-size:0.66rem;font-weight:800;margin-bottom:0.5rem;opacity:0.9}
+.rec-text{font-size:0.84rem;line-height:1.7;font-weight:600}
+.rec-streak{background:linear-gradient(135deg,var(--accent-soft),var(--surface2))}
+.rec-streak .rec-label{color:var(--gold)}
+.rec-streak .rec-text{color:var(--text)}
+.rec-beads{display:flex;gap:4px;margin-bottom:0.6rem;flex-wrap:wrap}
+.rec-bead{width:14px;height:14px;border-radius:4px;background:var(--surface3)}
+.rec-bead.on{background:var(--gold)}
+.rec-week{background:var(--card-grad-2);border:1px solid var(--border)}
+.rec-week .rec-label{color:var(--text2)}
+.rec-week .rec-text{color:var(--text);font-style:italic;line-height:2;font-weight:500}
+.rec-done{background:linear-gradient(135deg,var(--green-soft),var(--surface2))}
+.rec-done .rec-label{color:var(--green)}
+.rec-done .rec-text{color:var(--text)}
+.rec-done .rec-emoji{position:absolute;top:0.6rem;left:0.9rem;font-size:1.2rem;opacity:0.9}
+.rec-count{background:linear-gradient(135deg,var(--purple-soft),var(--surface2));display:flex;align-items:center;gap:0.9rem}
+.rec-count .rec-num{font-size:1.9rem;font-weight:800;color:var(--purple);flex-shrink:0}
+.rec-count .rec-text{color:var(--text)}
 .crop-stage{display:flex;justify-content:center;background:var(--surface2);border-radius:12px;padding:10px}
 #cropCanvas{border-radius:8px;touch-action:none;background:#000;cursor:grab;max-width:100%}
 .crop-zoom{display:flex;align-items:center;gap:10px;margin-top:12px;color:var(--text2);font-size:1rem}
@@ -580,7 +611,14 @@ body{padding-bottom:4.8rem !important}
     <!-- Mood -->
     <div class="mood-card" id="mood-card">
       <div class="mood-label">حس و حال</div>
-      <div class="mood-emojis none-selected" id="moodEmojis"></div>
+      <div class="mood-slider-wrap">
+        <div class="mood-big empty" id="moodBig">؟</div>
+        <div class="mood-slider-track">
+          <div class="mood-slider-fill empty" id="moodFill"></div>
+          <input type="range" class="mood-slider-input" id="moodSlider" min="0" max="11" step="1" value="0">
+        </div>
+        <div class="mood-ticks" id="moodTicks"></div>
+      </div>
     </div>
 
     <!-- Free Tasks -->
@@ -831,6 +869,15 @@ body{padding-bottom:4.8rem !important}
     </div>
     <div class="card-body"><div id="insightsBody"></div></div>
   </div>
+  <div class="card" id="records-card">
+    <div class="card-head">
+      <div class="card-head-left">
+        <svg class="card-icon-svg" viewBox="0 0 24 24" style="color:var(--gold)"><path d="M12 2l2.4 7.4H22l-6 4.6 2.3 7.4-6.3-4.6L5.7 21.4 8 14 2 9.4h7.6z"/></svg>
+        <span class="card-title" style="color:var(--gold)">رکوردها و لحظه‌ها</span>
+      </div>
+    </div>
+    <div class="card-body"><div id="recordsBody"></div></div>
+  </div>
   <div class="card" style="cursor:pointer;margin-bottom:0.5rem" onclick="openSettings()">
     <div class="card-head">
       <div class="card-head-left">
@@ -1045,9 +1092,13 @@ function getSettings() {
 
 // ── نسخه‌بندی داده (Schema Versioning) ──
 // هر بار ساختار داده عوض شد، یه بلوک جدید با شماره بالاتر اضافه کن و SCHEMA_VERSION رو زیاد کن.
-const APP_VERSION = '9.4';
+const APP_VERSION = '9.8';
 // فهرست تغییرات نسخه‌ها (جدیدترین بالا)
 const CHANGELOG = [
+  {v:'9.8', items:['انتخاب حس‌وحال روز حالا با یک اسلایدر زیبا انجام می‌شود؛ ایموجی‌های شخصی‌ات همان‌طور حفظ شده‌اند']},
+  {v:'9.7', items:['کارت‌های رکوردها به داده‌ی واقعی وصل شدند: زنجیره‌ی عادت، جشن کار معوقه، خلاصه‌ی هفته و شمارش آثار تمام‌شده','هر کارت طرح خودش را دارد و ترتیبشان تصادفی است']},
+  {v:'9.6', items:['پیش‌نمایش طرح کارت‌های رکوردها و لحظه‌ها (موقت، برای تأیید گرافیک)']},
+  {v:'9.5', items:['دو کشف جدید در نگاه کلی: رابطه‌ی حس‌وحال با رشد، و بهترین روزِ هفته‌ات — هر دو فقط وقتی الگوی مثبت و معنادار باشد']},
   {v:'9.4', items:['اصلاح جمله‌ی خوش‌آمدِ کشف‌ها']},
   {v:'9.3', items:['کشف‌های نگاه کلی مهربان‌تر شد: فقط الگوهای مثبت و دلگرم‌کننده نشان داده می‌شوند، بدون هیچ قضاوت یا نکته‌ی منفی']},
   {v:'9.2', items:['رفع باگ مهم: یک گزارش قدیمی روزهای خالیِ تکراری می‌ساخت؛ این روزها پاک‌سازی شدند','امتیازدهی حس‌وحال حالا دقیقاً بر اساس ترتیبی است که خودت در تنظیمات چیده‌ای','نمودار حس‌وحال و تحلیل‌ها هماهنگ شدند']},
@@ -1267,28 +1318,65 @@ function renderDay() {
   if(isToday){ scheduleTaskAlerts(); showDueReminder(); }
 }
 
-// ── Mood ──
+// ── Mood (اسلایدر) ──
 function renderMoodButtons(selectedMood) {
   const s = getSettings();
   const moods = s.moods.length ? s.moods : DEFAULT_MOODS;
-  const wrap = document.getElementById('moodEmojis');
-  if (!wrap) return;
-  wrap.innerHTML = '';
+  const slider = document.getElementById('moodSlider');
+  const big = document.getElementById('moodBig');
+  const fill = document.getElementById('moodFill');
+  const ticks = document.getElementById('moodTicks');
+  if (!slider || !big) return;
   const isFuture = activeKey() > todayKey();
-  moods.forEach(function(e) {
-    const btn = document.createElement('button');
-    btn.className = 'mood-btn' + (e===selectedMood?' selected':'');
-    btn.textContent = e;
-    if(isFuture) {
-      btn.disabled = true;
-      btn.style.opacity = '0.3';
-      btn.style.cursor = 'not-allowed';
-    } else {
-      btn.addEventListener('click', function() { selectMood(e); });
-    }
-    wrap.appendChild(btn);
+  slider.max = moods.length - 1;
+  // برچسب‌های ایموجی زیر اسلایدر
+  ticks.innerHTML = '';
+  moods.forEach(function(e){
+    const t = document.createElement('span');
+    t.className = 'mood-tick';
+    t.textContent = e;
+    ticks.appendChild(t);
   });
-  wrap.classList.toggle('none-selected', !selectedMood);
+  const selIdx = selectedMood ? moods.indexOf(selectedMood) : -1;
+  if (selIdx >= 0) {
+    // حس‌وحال ثبت‌شده
+    slider.value = selIdx;
+    big.textContent = moods[selIdx];
+    big.classList.remove('empty');
+    fill.classList.remove('empty');
+    markMoodTick(selIdx);
+  } else {
+    // حالت خنثی
+    slider.value = Math.floor((moods.length-1)/2);
+    big.textContent = '؟';
+    big.classList.add('empty');
+    fill.classList.add('empty');
+    markMoodTick(-1);
+  }
+  slider.disabled = isFuture;
+  slider.style.opacity = isFuture ? '0.4' : '1';
+  // رویدادها (یک‌بار وصل می‌شوند)
+  if (!slider._moodInit) {
+    slider._moodInit = true;
+    slider.addEventListener('input', function(){
+      const m = (getSettings().moods.length ? getSettings().moods : DEFAULT_MOODS);
+      const idx = parseInt(slider.value, 10);
+      big.textContent = m[idx];
+      big.classList.remove('empty');
+      fill.classList.remove('empty');
+      markMoodTick(idx);
+      big.style.transform = 'scale(1.15)';
+      setTimeout(function(){ big.style.transform=''; }, 120);
+    });
+    slider.addEventListener('change', function(){
+      const m = (getSettings().moods.length ? getSettings().moods : DEFAULT_MOODS);
+      selectMood(m[parseInt(slider.value,10)]);
+    });
+  }
+}
+function markMoodTick(idx){
+  const ticks = document.querySelectorAll('#moodTicks .mood-tick');
+  ticks.forEach(function(t,i){ t.classList.toggle('active', i===idx); });
 }
 
 function selectMood(emoji) {
@@ -2421,6 +2509,130 @@ function moodRelationByMedian(days, valueOf, labelPositive){
   if(gap < INSIGHT_MIN_GAP) return null;
   return labelPositive;
 }
+// مقایسه‌ی دو گروهِ دوتایی (مثل روزهای دارای رشد / بدون رشد)؛ فقط رابطه‌ی مثبت گزارش می‌شود
+function moodRelationByGroup(days, predicate, minEach, labelPositive){
+  var rows=days.filter(function(x){return x.mood!==null;});
+  var yes=rows.filter(predicate), no=rows.filter(function(x){return !predicate(x);});
+  if(yes.length<minEach || no.length<minEach) return null;
+  var avg=function(a){return a.reduce(function(s,x){return s+x.mood;},0)/a.length;};
+  var gap=avg(yes)-avg(no);
+  if(gap<INSIGHT_MIN_GAP) return null;
+  return labelPositive;
+}
+// بهترین روزِ هفته از نظر حس‌وحال (فقط اگر واقعاً برجسته باشد)؛ هیچ‌وقت بدترین روز را نمی‌گوید
+var DOW_FA=['یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه','شنبه'];
+function bestDayOfWeekInsight(days){
+  var rows=days.filter(function(x){return x.mood!==null;});
+  if(rows.length<INSIGHT_MIN_DAYS) return null;
+  var overall=rows.reduce(function(s,x){return s+x.mood;},0)/rows.length;
+  var byDow={};
+  rows.forEach(function(x){ (byDow[x.dow]=byDow[x.dow]||[]).push(x.mood); });
+  var best=null;
+  Object.keys(byDow).forEach(function(k){
+    var arr=byDow[k]; if(arr.length<3) return; // حداقل ۳ نمونه برای هر روز
+    var avg=arr.reduce(function(s,v){return s+v;},0)/arr.length;
+    if(avg-overall>=INSIGHT_MIN_GAP && (!best || avg>best.avg)) best={dow:+k, avg:avg};
+  });
+  if(!best) return null;
+  return DOW_FA[best.dow]+'‌های تو معمولاً روزهای خوبی‌اند. 🌤️';
+}
+// رکوردها و لحظه‌های قابلِ جشن — فقط مثبت، با لحنِ شخصی و بدون ادعا
+var DOW_FA2=['یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه','شنبه'];
+// بهترین زنجیره‌ی فعلیِ هر عادت (روزهای متوالیِ true تا امروز یا دیروز)
+function bestHabitStreak(){
+  var g=getGlobal(); if(!g.habits||!g.habits.length) return null;
+  var best=null;
+  g.habits.forEach(function(h){
+    var days=h.days||{};
+    // از امروز به عقب بشمار تا اولین روزِ غیرِtrue
+    var streak=0; var d=new Date(today);
+    // اگر امروز هنوز تیک نخورده، از دیروز شروع کن تا زنجیره‌ی دیروز را از دست ندهیم
+    if(days[dateKey(d)]!==true){ d.setDate(d.getDate()-1); }
+    while(days[dateKey(d)]===true){ streak++; d.setDate(d.getDate()-1); }
+    if(streak>=3 && (!best||streak>best.streak)) best={name:h.name||'عادت', streak:streak};
+  });
+  return best;
+}
+// کاری که چند بار منتقل شده و امروز انجام شده
+function finishedCarriedTask(){
+  var d=getDayData(todayKey());
+  var all=(d.freeTasks||[]).concat(d.timedTasks||[]);
+  var best=null;
+  all.forEach(function(t){
+    if(t.done && t.doneAt!=='منتقل' && (t.carryCount||0)>=3){
+      if(!best || (t.carryCount||0)>(best.carryCount||0)) best=t;
+    }
+  });
+  return best;
+}
+// شمارشِ آثارِ تمام‌شده در کتابخانه
+function finishedLibraryCount(){
+  var lib=getLibrary(); var c={books:0,films:0,podcasts:0};
+  LIB_TYPES.forEach(function(t){
+    (lib[t]||[]).forEach(function(it){ if(it.status==='done') c[t]++; });
+  });
+  return c;
+}
+// خلاصه‌ی هفته — روایتِ توصیفی و بدونِ مقایسه
+function weekSummaryText(){
+  var moods=[], doneCount=0, grewDays=0, finishedThisWeek=0;
+  for(var i=0;i<7;i++){
+    var dd=new Date(today); dd.setDate(dd.getDate()-i);
+    var key=dateKey(dd); var rec=store[key];
+    var ms=rec?moodScoreOf(rec.mood):null; if(ms!==null) moods.push(ms);
+    var tr=dayTaskRatio(key); if(tr!==null){ var dn=(rec.freeTasks||[]).concat(rec.timedTasks||[]).filter(function(t){return t.done&&t.doneAt!=='منتقل';}).length; doneCount+=dn; }
+    if(dayHadGrowth(key)) grewDays++;
+  }
+  if(moods.length<3) return null; // داده‌ی کافی برای روایت نیست
+  var avg=moods.reduce(function(s,x){return s+x;},0)/moods.length;
+  var parts=[];
+  if(avg>=8.5) parts.push('این هفته رو با حسِ خوبی گذراندم');
+  else if(avg>=6) parts.push('این هفته حالم بیشترِ روزها متعادل بود');
+  else parts.push('این هفته روزهای سختی هم داشتم، ولی ادامه دادم');
+  if(doneCount>0) parts.push(doneCount+' کار رو پیش بردم');
+  if(grewDays>0) parts.push(grewDays+' روز برای رشدم وقت گذاشتم');
+  return parts.join('، ')+'.';
+}
+function renderRecords(){
+  var el=document.getElementById('recordsBody'); if(!el) return;
+  var cards=[];
+  // ۱) زنجیره‌ی عادت
+  var streak=bestHabitStreak();
+  if(streak){
+    var beads='';
+    var show=Math.min(streak.streak,9);
+    for(var i=0;i<Math.max(show,9);i++) beads+='<div class="rec-bead'+(i<show?' on':'')+'"></div>';
+    cards.push('<div class="rec-card rec-streak"><div class="rec-label">زنجیره‌ی عادت</div><div class="rec-beads">'+beads+'</div><div class="rec-text">'+streak.streak+' روز پشتِ‌سرهم به «'+esc(streak.name)+'» پایبند بودی 🔥</div></div>');
+  }
+  // ۲) جشن کار معوقه
+  var ct=finishedCarriedTask();
+  if(ct){
+    cards.push('<div class="rec-card rec-done"><div class="rec-emoji">🎉</div><div class="rec-label">بالاخره!</div><div class="rec-text">«'+esc(ct.text||'یک کار')+'» که چند روز منتظر مونده بود، امروز بالاخره انجام شد 🌿</div></div>');
+  }
+  // ۳) خلاصه‌ی هفته
+  var ws=weekSummaryText();
+  if(ws){
+    cards.push('<div class="rec-card rec-week"><div class="rec-label">خلاصه‌ی هفته‌ام</div><div class="rec-text">'+esc(ws)+'</div></div>');
+  }
+  // ۴) شمارش پایان‌یافته‌ها
+  var fc=finishedLibraryCount();
+  var total=fc.books+fc.films+fc.podcasts;
+  if(total>0){
+    var bits=[];
+    if(fc.books) bits.push(toFa(fc.books)+' کتاب');
+    if(fc.films) bits.push(toFa(fc.films)+' فیلم');
+    if(fc.podcasts) bits.push(toFa(fc.podcasts)+' پادکست');
+    cards.push('<div class="rec-card rec-count"><div class="rec-num">'+toFa(total)+'</div><div class="rec-text">تا حالا '+bits.join(' و ')+' رو تموم کردی 🌟</div></div>');
+  }
+  // ترتیبِ رندوم برای تنوع
+  for(var j=cards.length-1;j>0;j--){ var k=Math.floor(Math.random()*(j+1)); var tmp=cards[j]; cards[j]=cards[k]; cards[k]=tmp; }
+  if(!cards.length){
+    el.innerHTML='<div class="insight-empty">لحظه‌های خوبت کم‌کم اینجا جمع می‌شوند — یک زنجیره‌ی عادت، یک کتابِ تمام‌شده، یا کاری که بالاخره انجامش دادی.</div>';
+  } else {
+    el.innerHTML=cards.join('');
+  }
+}
+function toFa(n){ return (''+n).replace(/[0-9]/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'[+d];}); }
 function renderInsights(){
   var el=document.getElementById('insightsBody'); if(!el) return;
   var days=gatherDays(30);
@@ -2437,6 +2649,15 @@ function renderInsights(){
     'روزهایی که به عادت‌هایت پایبندی، با حالِ بهترت همراه بوده‌اند. ✨'
   );
   if(habitIns) cards.push({icon:'✨', title:'حس‌وحال و عادت‌ها', text:habitIns});
+  // حس‌وحال × رشد
+  var growthIns=moodRelationByGroup(days,
+    function(x){return x.growth;}, 4,
+    'روزهایی که چیزی یاد گرفته‌ای یا برای رشدت وقت گذاشته‌ای، حالت بهتر بوده. 📚'
+  );
+  if(growthIns) cards.push({icon:'📚', title:'حس‌وحال و رشد', text:growthIns});
+  // الگوی روزهای هفته
+  var dowIns=bestDayOfWeekInsight(days);
+  if(dowIns) cards.push({icon:'🌤️', title:'الگوی روزهای هفته', text:dowIns});
 
   if(!cards.length){
     el.innerHTML='<div class="insight-empty">هنوز دارم روزهایت را می‌خوانم. هرچه بیشتر همراهم باشی، الگوهای قشنگ‌ترِ زندگی‌ات را برایت پیدا می‌کنم.</div>';
@@ -3446,7 +3667,7 @@ function switchTab(name) {
   });
   if(name==='Rooz') { updateHero(); renderDay(); }
   if(name==='Khelaghat') { renderHub(); }
-  if(name==='Negah') { renderHabitStats(); renderStreak(); renderInsights(); }
+  if(name==='Negah') { renderHabitStats(); renderStreak(); renderInsights(); renderRecords(); }
 }
 
 function goToToday() {
