@@ -1126,9 +1126,10 @@ function getSettings() {
 
 // ── نسخه‌بندی داده (Schema Versioning) ──
 // هر بار ساختار داده عوض شد، یه بلوک جدید با شماره بالاتر اضافه کن و SCHEMA_VERSION رو زیاد کن.
-const APP_VERSION = '10.2';
+const APP_VERSION = '10.3';
 // فهرست تغییرات نسخه‌ها (جدیدترین بالا)
 const CHANGELOG = [
+  {v:'10.3', items:['وقتی یادآور روزانه را روشن کنی، در صورت نیاز خودکار اجازه‌ی نوتیفیکیشن گرفته می‌شود']},
   {v:'10.2', items:['بخش نوتیفیکیشن در تنظیمات: نمایش وضعیت، دکمه‌ی فعال‌سازی و تست','یادآور روزانه‌ی شروع و پایان روز با ساعت دلخواه']},
   {v:'10.1', items:['راهنما و تور با تغییرات اخیر هماهنگ شد: اسلایدر حس‌وحال، کتابخانه، و بخش‌های جدید نگاه کلی (کشف‌ها و رکوردها)']},
   {v:'10.0', items:['اسلایدر حس‌وحال نگه داشته شد؛ آیین صبح/شب فعلاً کنار گذاشته شد (برای نسخه‌ای که به هوش مصنوعی وصل شود)']},
@@ -3613,7 +3614,12 @@ function saveNotifPrefs(){
   n.eveningTime=document.getElementById('notifEveningTime').value||'21:00';
   s.notif=n; save();
   toggleNotifTimeRows();
-  scheduleDailyReminders();
+  // اگر یادآوری روشن شد ولی هنوز اجازه‌ی نوتیف نیست، اجازه بگیر
+  if((n.morning||n.evening) && 'Notification' in window && Notification.permission==='default'){
+    Notification.requestPermission().then(function(){ refreshNotifStatus(); scheduleDailyReminders(); });
+  } else {
+    scheduleDailyReminders();
+  }
 }
 function scheduleDailyReminders(){
   _dailyTimers.forEach(function(t){clearTimeout(t);}); _dailyTimers=[];
