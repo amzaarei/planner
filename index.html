@@ -298,6 +298,36 @@ body{padding-bottom:4.8rem !important}
 .hm-cell.future{opacity:0.35}
 .hm-cell.today{box-shadow:0 0 0 1.5px var(--accent2)}
 .hm-summary{text-align:center;font-size:0.76rem;color:var(--text2);margin-top:0.8rem}
+.idea-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem}
+.idea-card2{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:0.7rem;cursor:pointer;display:flex;flex-direction:column;gap:0.4rem;min-height:5.5rem;position:relative;transition:transform 0.1s}
+.idea-card2:active{transform:scale(0.97)}
+.idea-card2-top{display:flex;align-items:center;gap:0.3rem;flex-wrap:wrap}
+.idea-card2-tag{font-size:0.6rem;color:var(--text3);background:var(--surface3);border-radius:20px;padding:0.1rem 0.45rem}
+.idea-card2-dot{width:0.5rem;height:0.5rem;border-radius:50%;flex-shrink:0}
+.idea-card2-text{font-size:0.82rem;font-weight:700;color:var(--text);line-height:1.5;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical}
+.idea-card2-thumb{width:100%;height:4.5rem;object-fit:cover;border-radius:8px}
+.idea-card2-meta{font-size:0.62rem;color:var(--text3);margin-top:auto;display:flex;gap:0.5rem;align-items:center}
+.idea-empty2{grid-column:1/-1;text-align:center;color:var(--text3);font-size:0.8rem;padding:1.5rem 0;line-height:1.8}
+.idea-modal-row{display:flex;gap:0.5rem;align-items:center;margin-bottom:0.6rem}
+.idea-modal-select{background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:0.4rem 0.6rem;font-family:'Vazirmatn',sans-serif;font-size:0.78rem;color:var(--text)}
+.idea-modal-title-input{width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:0.6rem 0.7rem;font-family:'Vazirmatn',sans-serif;font-size:0.95rem;font-weight:700;color:var(--text);resize:none;line-height:1.6;margin-bottom:0.6rem}
+.idea-modal-expand{width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:0.6rem 0.7rem;font-family:'Vazirmatn',sans-serif;font-size:0.85rem;color:var(--text);resize:vertical;line-height:1.9;margin-bottom:0.8rem}
+.idea-modal-title-input:focus,.idea-modal-expand:focus,.idea-modal-select:focus{outline:none;border-color:var(--accent)}
+.idea-modal-media-label{font-size:0.72rem;color:var(--text3);font-weight:700;margin-bottom:0.5rem}
+.idea-modal-imgs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.4rem;margin-bottom:0.5rem}
+.idea-modal-img-wrap{position:relative;aspect-ratio:1}
+.idea-modal-img-wrap img{width:100%;height:100%;object-fit:cover;border-radius:8px}
+.idea-modal-img-del{position:absolute;top:0.2rem;left:0.2rem;background:rgba(0,0,0,0.6);color:#fff;border:none;border-radius:50%;width:1.3rem;height:1.3rem;font-size:0.7rem;cursor:pointer;line-height:1}
+.idea-modal-addimg{width:100%;background:var(--surface2);border:1px dashed var(--border2);color:var(--text3);border-radius:10px;padding:0.6rem;font-family:'Vazirmatn',sans-serif;font-size:0.8rem;cursor:pointer;margin-bottom:0.8rem}
+.idea-modal-delete{width:100%;background:transparent;border:1px solid var(--red);color:var(--red);border-radius:10px;padding:0.5rem;font-family:'Vazirmatn',sans-serif;font-size:0.78rem;cursor:pointer}
+.idea-cat-row{display:flex;justify-content:space-between;align-items:center;padding:0.5rem 0.2rem;border-bottom:1px solid var(--border)}
+.idea-cat-del{background:none;border:none;color:var(--red);cursor:pointer;font-size:0.85rem}
+.idea-status-btn-tappable{position:relative;padding:0.25rem 0.7rem;font-size:0.7rem;box-shadow:0 1px 3px rgba(0,0,0,0.12)}
+.idea-modal-savebtn{flex:1;background:var(--accent);color:var(--on-accent);border:none;border-radius:10px;padding:0.7rem;font-family:'Vazirmatn',sans-serif;font-size:0.85rem;font-weight:800;cursor:pointer}
+.idea-modal-delete-icon{background:var(--red-soft);border:none;color:var(--red);border-radius:10px;padding:0.7rem 0.9rem;font-size:0.95rem;cursor:pointer}
+.idea-cat-input{background:var(--surface2);border:1px solid var(--border2);border-radius:9px;padding:0.5rem 0.7rem;font-family:'Vazirmatn',sans-serif;font-size:0.82rem;color:var(--text);outline:none}
+.idea-cat-input:focus{border-color:var(--accent)}
+.idea-cat-add{background:var(--accent);color:var(--on-accent);border:none;border-radius:9px;padding:0.5rem 1rem;font-family:'Vazirmatn',sans-serif;font-size:0.78rem;font-weight:800;cursor:pointer;white-space:nowrap}
 .insight-item{display:flex;gap:0.6rem;align-items:flex-start;padding:0.6rem 0.5rem;border-bottom:1px solid var(--border)}
 .insight-item:last-child{border-bottom:none}
 .insight-icon{width:1.8rem;height:1.8rem;border-radius:50%;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0}
@@ -480,6 +510,42 @@ body{padding-bottom:4.8rem !important}
     </div>
     <div class="hm-grid" id="habitMonthGrid"></div>
     <div class="hm-summary" id="habitMonthSummary"></div>
+  </div>
+</div>
+
+<div class="overlay" id="ideaModal">
+  <div class="modal-box" style="max-width:440px;max-height:88vh;overflow-y:auto">
+    <div class="modal-header">
+      <div class="modal-title">ایده</div>
+      <button class="modal-close" onclick="closeIdeaModal()">✕</button>
+    </div>
+    <div class="idea-modal-row">
+      <select id="ideaModalTag" class="idea-modal-select" onchange="saveIdeaModal()"></select>
+      <button id="ideaModalStatus" class="idea-status-btn idea-status-btn-tappable" onclick="cycleIdeaModalStatus()"></button>
+    </div>
+    <textarea id="ideaModalText" class="idea-modal-title-input" rows="2" placeholder="ایده‌ات چیه؟" oninput="saveIdeaModal()"></textarea>
+    <textarea id="ideaModalExpand" class="idea-modal-expand" rows="7" placeholder="اینجا ایده‌ات رو باز کن، جزئیات بنویس، فکرت رو گسترش بده…" oninput="saveIdeaModal()"></textarea>
+    <div class="idea-modal-media-label">تصویرها</div>
+    <div id="ideaModalImgs" class="idea-modal-imgs"></div>
+    <button class="idea-modal-addimg" onclick="addIdeaModalImg()">🖼 افزودن تصویر</button>
+    <div style="display:flex;gap:0.5rem;margin-top:0.3rem">
+      <button class="idea-modal-savebtn" onclick="closeIdeaModal()">✓ ذخیره و بستن</button>
+      <button class="idea-modal-delete-icon" onclick="deleteIdeaFromModal()" title="حذف">🗑</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="ideaCatsModal">
+  <div class="modal-box" style="max-width:340px">
+    <div class="modal-header">
+      <div class="modal-title">دسته‌ها</div>
+      <button class="modal-close" onclick="closeIdeaCats()">✕</button>
+    </div>
+    <div id="ideaCatsList"></div>
+    <div style="display:flex;gap:0.5rem;margin-top:0.9rem">
+      <input id="ideaCatNew" class="idea-cat-input" style="flex:1" placeholder="نام دسته جدید" onkeydown="if(event.key==='Enter')addIdeaCatFromModal()">
+      <button onclick="addIdeaCatFromModal()" class="idea-cat-add">+ افزودن</button>
+    </div>
   </div>
 </div>
 
@@ -830,15 +896,19 @@ body{padding-bottom:4.8rem !important}
 <!-- ████ TAB: خلاقیت ✨ ████ -->
 <div id="tabKhelaghat" class="tab-page">
 <div class="main" style="display:flex;flex-direction:column;gap:0.85rem">
-  <div class="card" style="padding:0.75rem 0.85rem 0.6rem">
+  <div class="card" style="padding:0.75rem 0.85rem 0.85rem">
     <div class="card-head" style="padding:0 0 0.55rem">
       <div class="card-head-left">
-        <span style="font-size:1rem">🌱</span>
-        <span class="card-title" style="color:var(--purple)">Creative Hub</span>
+        <span style="font-size:1rem">💡</span>
+        <span class="card-title" style="color:var(--purple)">ایده‌ها</span>
       </div>
-      <button onclick="openHubCard(null,null)" style="background:var(--accent);color:#000;border:none;border-radius:8px;padding:0.2rem 0.7rem;font-family:'Vazirmatn',sans-serif;font-size:0.72rem;font-weight:700;cursor:pointer">+ ایده</button>
+      <div style="display:flex;gap:0.4rem">
+        <button onclick="openIdeaCats()" title="مدیریت دسته‌ها" style="background:var(--surface2);color:var(--text3);border:none;border-radius:8px;padding:0.2rem 0.55rem;font-size:0.8rem;cursor:pointer">⚙</button>
+        <button onclick="newIdea()" style="background:var(--accent);color:var(--on-accent);border:none;border-radius:8px;padding:0.2rem 0.7rem;font-family:'Vazirmatn',sans-serif;font-size:0.72rem;font-weight:700;cursor:pointer">+ ایده</button>
+      </div>
     </div>
-    <div class="hub-pipeline" id="hubBoard"></div>
+    <div class="idea-tags" id="ideaTagFilter" style="display:flex;flex-wrap:wrap;gap:0.35rem;margin-bottom:0.7rem"></div>
+    <div id="ideaList" class="idea-grid"></div>
   </div>
 </div>
 </div>
@@ -1126,9 +1196,12 @@ function getSettings() {
 
 // ── نسخه‌بندی داده (Schema Versioning) ──
 // هر بار ساختار داده عوض شد، یه بلوک جدید با شماره بالاتر اضافه کن و SCHEMA_VERSION رو زیاد کن.
-const APP_VERSION = '10.3';
+const APP_VERSION = '10.6';
 // فهرست تغییرات نسخه‌ها (جدیدترین بالا)
 const CHANGELOG = [
+  {v:'10.6', items:['بهبود ظاهر ایده‌ها: دکمه‌ی ذخیره و بستن، نشانه‌ی ⇄ روی وضعیت برای روشن‌بودن قابل‌تغییر بودن، و دکمه‌ی زیباتر افزودن دسته']},
+  {v:'10.5', items:['بازطراحی ایده‌ها: هر ایده یک کارت جمع‌وجور است و با زدن روی آن یک صفحه‌ی کامل برای متن و چند تصویر باز می‌شود','مدیریت دسته‌ها به پنجره‌ی جدا منتقل شد تا صفحه شلوغ نباشد']},
+  {v:'10.4', items:['بخش خلاقیت به لیست ساده‌ی ایده‌ها برگشت (به‌جای کانبان): با دسته‌بندی، وضعیت، گسترش ایده و تصویر']},
   {v:'10.3', items:['وقتی یادآور روزانه را روشن کنی، در صورت نیاز خودکار اجازه‌ی نوتیفیکیشن گرفته می‌شود']},
   {v:'10.2', items:['بخش نوتیفیکیشن در تنظیمات: نمایش وضعیت، دکمه‌ی فعال‌سازی و تست','یادآور روزانه‌ی شروع و پایان روز با ساعت دلخواه']},
   {v:'10.1', items:['راهنما و تور با تغییرات اخیر هماهنگ شد: اسلایدر حس‌وحال، کتابخانه، و بخش‌های جدید نگاه کلی (کشف‌ها و رکوردها)']},
@@ -2844,34 +2917,133 @@ const STATUS_LABELS={raw:'خام',review:'در بررسی',doing:'در اجرا'
 const STATUS_COLORS={raw:'var(--green)',review:'var(--gold)',doing:'var(--blue)',done:'var(--purple)',dropped:'var(--red)'};
 const STATUS_CYCLE=['raw','review','doing','done','dropped'];
 
+function ideaImgs(idea){ // سازگاری: img تکی قدیمی → آرایه
+  if(idea.imgs && idea.imgs.length) return idea.imgs;
+  if(idea.img) return [idea.img];
+  return [];
+}
 function renderIdeas(){
   const g=getGlobal();const c=document.getElementById('ideaList');if(!c)return;c.innerHTML='';
   const filtered=(g.ideas||[]).filter(function(idea){return ideaFilter==='all'||idea.tag===ideaFilter;});
+  if(!filtered.length){
+    c.innerHTML='<div class="idea-empty2">هنوز ایده‌ای اینجا نیست.<br>هر چی به ذهنت می‌رسه رو با دکمه‌ی + ایده ثبت کن.</div>';
+    return;
+  }
   filtered.forEach(function(idea){
     const realIdx=g.ideas.indexOf(idea);const cur=idea.status||'raw';
-    const div=document.createElement('div');div.className='idea-item';
-    const delBtn=document.createElement('button');delBtn.className='idea-del';delBtn.textContent='✕';
-    delBtn.addEventListener('click',function(){deleteIdea(realIdx);});
-    const tagRow=document.createElement('div');tagRow.style.cssText='display:flex;align-items:center;gap:0.4rem;margin-bottom:0.25rem';
-    const tagEl=document.createElement('div');tagEl.className='idea-tag-label';tagEl.textContent=idea.tag||'ایده';
-    const statusBtn=document.createElement('button');statusBtn.className='idea-status-btn';statusBtn.textContent=STATUS_LABELS[cur]||'خام';statusBtn.style.cssText='background:'+STATUS_COLORS[cur]+'20;color:'+STATUS_COLORS[cur];
-    statusBtn.addEventListener('click',function(){cycleIdeaStatus(realIdx);});
-    tagRow.appendChild(tagEl);tagRow.appendChild(statusBtn);
-    const txt=document.createElement('textarea');txt.className='idea-text';txt.placeholder='ایده‌ات رو بنویس...';txt.value=idea.text||'';
-    txt.addEventListener('blur',function(){updateIdea(realIdx,'text',txt.value);});
-    const exp=document.createElement('textarea');exp.className='idea-expand';exp.placeholder='گسترش ایده...';exp.value=idea.expand||'';
-    exp.addEventListener('blur',function(){updateIdea(realIdx,'expand',exp.value);});
-    div.appendChild(delBtn);div.appendChild(tagRow);div.appendChild(txt);div.appendChild(exp);
-    if(idea.img){const img=document.createElement('img');img.src=idea.img;img.className='idea-img';img.addEventListener('click',function(){if(confirm('تصویر حذف بشه؟')){updateIdea(realIdx,'img',null);}});div.appendChild(img);}
-    else{const imgBtn=document.createElement('button');imgBtn.className='img-btn';imgBtn.textContent='🖼 افزودن تصویر';imgBtn.addEventListener('click',function(){addIdeaImg(realIdx);});div.appendChild(imgBtn);}
-    c.appendChild(div);
+    const imgs=ideaImgs(idea);
+    const card=document.createElement('div');card.className='idea-card2';
+    card.addEventListener('click',function(){openIdeaModal(realIdx);});
+    var html='<div class="idea-card2-top"><span class="idea-card2-dot" style="background:'+(STATUS_COLORS[cur]||'var(--green)')+'"></span><span class="idea-card2-tag">'+esc(idea.tag||'ایده')+'</span></div>';
+    if(imgs.length) html+='<img class="idea-card2-thumb" src="'+imgs[0]+'">';
+    html+='<div class="idea-card2-text">'+(idea.text?esc(idea.text):'<span style="color:var(--text3);font-weight:400">بدون عنوان</span>')+'</div>';
+    var metaBits=[];
+    if(imgs.length>1) metaBits.push('🖼 '+toFa(imgs.length));
+    if((idea.expand||'').trim()) metaBits.push('📝');
+    if(metaBits.length) html+='<div class="idea-card2-meta">'+metaBits.join(' ')+'</div>';
+    card.innerHTML=html;
+    c.appendChild(card);
   });
 }
-function addIdea(){const g=getGlobal();const tag=ideaFilter==='all'?(g.ideaCategories[0]||'شخصی'):ideaFilter;g.ideas=g.ideas||[];g.ideas.unshift({tag,text:'',expand:'',status:'raw'});save();renderIdeas();setTimeout(function(){const items=document.querySelectorAll('.idea-text');if(items.length)items[0].focus();},50);}
-function updateIdea(i,field,val){const g=getGlobal();if(g.ideas[i]){g.ideas[i][field]=val;save();if(field==='img')renderIdeas();}}
-function deleteIdea(i){if(!confirm('ایده حذف بشه؟'))return;getGlobal().ideas.splice(i,1);save();renderIdeas();}
-function cycleIdeaStatus(i){const g=getGlobal();const cur=g.ideas[i].status||'raw';g.ideas[i].status=STATUS_CYCLE[(STATUS_CYCLE.indexOf(cur)+1)%STATUS_CYCLE.length];save();renderIdeas();}
-function addIdeaImg(i){const input=document.createElement('input');input.type='file';input.accept='image/*';input.onchange=function(e){const file=e.target.files[0];if(!file)return;const r=new FileReader();r.onload=function(ev){updateIdea(i,'img',ev.target.result);};r.readAsDataURL(file);};input.click();}
+function newIdea(){
+  const g=getGlobal();const tag=ideaFilter==='all'?(g.ideaCategories[0]||'شخصی'):ideaFilter;
+  g.ideas=g.ideas||[];g.ideas.unshift({tag:tag,text:'',expand:'',status:'raw',imgs:[]});
+  save();renderIdeas();
+  openIdeaModal(0);
+}
+function deleteIdea(i){getGlobal().ideas.splice(i,1);save();renderIdeas();}
+function cycleIdeaStatus(i){const g=getGlobal();const cur=g.ideas[i].status||'raw';g.ideas[i].status=STATUS_CYCLE[(STATUS_CYCLE.indexOf(cur)+1)%STATUS_CYCLE.length];save();}
+
+// ── مودال ایده ──
+var _ideaModalIdx=-1;
+function openIdeaModal(idx){
+  _ideaModalIdx=idx;
+  const g=getGlobal();const idea=g.ideas[idx];if(!idea)return;
+  // پر کردن دسته‌ها
+  const sel=document.getElementById('ideaModalTag');sel.innerHTML='';
+  (g.ideaCategories||[]).forEach(function(cat){
+    const o=document.createElement('option');o.value=cat;o.textContent=cat;if(cat===idea.tag)o.selected=true;sel.appendChild(o);
+  });
+  document.getElementById('ideaModalText').value=idea.text||'';
+  document.getElementById('ideaModalExpand').value=idea.expand||'';
+  updateIdeaModalStatus();
+  renderIdeaModalImgs();
+  document.getElementById('ideaModal').classList.add('open');
+}
+function closeIdeaModal(){ document.getElementById('ideaModal').classList.remove('open'); renderIdeas(); }
+function updateIdeaModalStatus(){
+  const g=getGlobal();const idea=g.ideas[_ideaModalIdx];if(!idea)return;
+  const cur=idea.status||'raw';
+  const b=document.getElementById('ideaModalStatus');
+  b.innerHTML=(STATUS_LABELS[cur]||'خام')+' <span style="opacity:0.6;font-size:0.85em">⇄</span>';
+  b.style.cssText='background:'+STATUS_COLORS[cur]+'20;color:'+STATUS_COLORS[cur];
+}
+function cycleIdeaModalStatus(){ cycleIdeaStatus(_ideaModalIdx); updateIdeaModalStatus(); }
+function saveIdeaModal(){
+  const g=getGlobal();const idea=g.ideas[_ideaModalIdx];if(!idea)return;
+  idea.tag=document.getElementById('ideaModalTag').value;
+  idea.text=document.getElementById('ideaModalText').value;
+  idea.expand=document.getElementById('ideaModalExpand').value;
+  save();
+}
+function renderIdeaModalImgs(){
+  const g=getGlobal();const idea=g.ideas[_ideaModalIdx];if(!idea)return;
+  if(!idea.imgs) idea.imgs=ideaImgs(idea); // مهاجرت img→imgs
+  const wrap=document.getElementById('ideaModalImgs');wrap.innerHTML='';
+  idea.imgs.forEach(function(src,ii){
+    const d=document.createElement('div');d.className='idea-modal-img-wrap';
+    d.innerHTML='<img src="'+src+'"><button class="idea-modal-img-del">✕</button>';
+    d.querySelector('button').addEventListener('click',function(){ idea.imgs.splice(ii,1);save();renderIdeaModalImgs(); });
+    wrap.appendChild(d);
+  });
+}
+function addIdeaModalImg(){
+  const input=document.createElement('input');input.type='file';input.accept='image/*';
+  input.onchange=function(e){
+    const file=e.target.files[0];if(!file)return;
+    const img=new Image();
+    const r=new FileReader();
+    r.onload=function(ev){
+      img.onload=function(){
+        // فشرده‌سازی تا حداکثر عرض ۸۰۰
+        var mw=800,sc=Math.min(1,mw/img.width);
+        var cv=document.createElement('canvas');cv.width=img.width*sc;cv.height=img.height*sc;
+        cv.getContext('2d').drawImage(img,0,0,cv.width,cv.height);
+        const g=getGlobal();const idea=g.ideas[_ideaModalIdx];if(!idea)return;
+        if(!idea.imgs)idea.imgs=ideaImgs(idea);
+        idea.imgs.push(cv.toDataURL('image/jpeg',0.82));
+        if(idea.img)delete idea.img;
+        save();renderIdeaModalImgs();
+      };
+      img.src=ev.target.result;
+    };
+    r.readAsDataURL(file);
+  };
+  input.click();
+}
+function deleteIdeaFromModal(){
+  if(!confirm('این ایده حذف بشه؟'))return;
+  deleteIdea(_ideaModalIdx);
+  document.getElementById('ideaModal').classList.remove('open');
+}
+// ── مدیریت دسته‌ها ──
+function openIdeaCats(){ renderIdeaCatsList(); document.getElementById('ideaCatsModal').classList.add('open'); }
+function closeIdeaCats(){ document.getElementById('ideaCatsModal').classList.remove('open'); renderIdeaTags(); renderIdeas(); }
+function renderIdeaCatsList(){
+  const g=getGlobal();const c=document.getElementById('ideaCatsList');c.innerHTML='';
+  (g.ideaCategories||[]).forEach(function(cat){
+    const row=document.createElement('div');row.className='idea-cat-row';
+    row.innerHTML='<span style="font-size:0.85rem;color:var(--text)">'+esc(cat)+'</span>';
+    const del=document.createElement('button');del.className='idea-cat-del';del.textContent='حذف';
+    del.addEventListener('click',function(){ removeIdeaCategory(cat); renderIdeaCatsList(); });
+    row.appendChild(del);c.appendChild(row);
+  });
+}
+function addIdeaCatFromModal(){
+  const inp=document.getElementById('ideaCatNew');const n=(inp.value||'').trim();if(!n)return;
+  const g=getGlobal();if(!g.ideaCategories.includes(n)){g.ideaCategories.push(n);save();}
+  inp.value='';renderIdeaCatsList();
+}
 
 // Review modal
 function openReview(){const g=getGlobal();reviewList=(g.ideas||[]).filter(function(idea){return ideaFilter==='all'||idea.tag===ideaFilter;});if(!reviewList.length)return;reviewIdx=0;showReviewCard();document.getElementById('reviewModal').classList.add('open');}
@@ -2879,7 +3051,7 @@ function closeReview(){document.getElementById('reviewModal').classList.remove('
 function reviewNav(dir){reviewIdx=Math.max(0,Math.min(reviewList.length-1,reviewIdx+dir));showReviewCard();}
 function showReviewCard(){
   const idea=reviewList[reviewIdx];const realIdx=getGlobal().ideas.indexOf(idea);const cur=idea.status||'raw';
-  document.getElementById('modalContent').innerHTML='<div style="margin-bottom:0.5rem;display:flex;gap:0.4rem"><span style="font-size:0.7rem;color:var(--text3)">'+idea.tag+'</span><button onclick="cycleIdeaStatus('+realIdx+');showReviewCard()" style="font-size:0.65rem;font-weight:700;padding:0.1rem 0.4rem;border-radius:20px;cursor:pointer;border:none;background:'+STATUS_COLORS[cur]+'20;color:'+STATUS_COLORS[cur]+';font-family:\'Vazirmatn\',sans-serif">'+STATUS_LABELS[cur]+'</button></div><div style="font-size:0.92rem;font-weight:700;color:var(--text);margin-bottom:0.5rem">'+idea.text+'</div>'+(idea.expand?'<div style="font-size:0.8rem;color:var(--text3);border-top:1px solid var(--border);padding-top:0.5rem">'+idea.expand+'</div>':'')+(idea.img?'<img src="'+idea.img+'" style="width:100%;max-height:180px;object-fit:cover;border-radius:8px;margin-top:0.5rem">':'');
+  document.getElementById('modalContent').innerHTML='<div style="margin-bottom:0.5rem;display:flex;gap:0.4rem"><span style="font-size:0.7rem;color:var(--text3)">'+idea.tag+'</span><button onclick="cycleIdeaStatus('+realIdx+');showReviewCard()" style="font-size:0.65rem;font-weight:700;padding:0.1rem 0.4rem;border-radius:20px;cursor:pointer;border:none;background:'+STATUS_COLORS[cur]+'20;color:'+STATUS_COLORS[cur]+';font-family:\'Vazirmatn\',sans-serif">'+STATUS_LABELS[cur]+'</button></div><div style="font-size:0.92rem;font-weight:700;color:var(--text);margin-bottom:0.5rem">'+idea.text+'</div>'+(idea.expand?'<div style="font-size:0.8rem;color:var(--text3);border-top:1px solid var(--border);padding-top:0.5rem">'+idea.expand+'</div>':'')+(ideaImgs(idea).length?'<img src="'+ideaImgs(idea)[0]+'" style="width:100%;max-height:180px;object-fit:cover;border-radius:8px;margin-top:0.5rem">':'');
   document.getElementById('modalCounter').textContent=(reviewIdx+1)+' / '+reviewList.length;
 }
 
@@ -3803,7 +3975,7 @@ function switchTab(name) {
     if(b) b.classList.toggle('active', t===name);
   });
   if(name==='Rooz') { updateHero(); renderDay(); }
-  if(name==='Khelaghat') { renderHub(); }
+  if(name==='Khelaghat') { renderIdeaTags(); renderIdeas(); }
   if(name==='Negah') { renderHabitStats(); renderStreak(); renderInsights(); renderRecords(); }
 }
 
